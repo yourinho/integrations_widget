@@ -1,0 +1,589 @@
+/* Albato Widget - namespaced styles (Figma spec) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+.albato-widget {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  color: #2C3534;
+}
+
+.aw-root {
+  min-height: 200px;
+}
+
+/* Apps gallery - main container */
+.aw-gallery-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px;
+  gap: 32px;
+  max-width: 1200px;
+  width: 100%;
+  min-height: 812px;
+  background: #FFFFFF;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .aw-gallery-wrap {
+    padding: 24px 16px;
+    gap: 24px;
+  }
+}
+
+/* Title - Available integrations */
+.aw-gallery-title {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 60px;
+  text-align: center;
+  color: #2C3534;
+}
+
+@media (max-width: 768px) {
+  .aw-gallery-title {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
+/* Search bar */
+.aw-search {
+  width: 100%;
+  max-width: 1040px;
+  position: relative;
+}
+
+.aw-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.aw-search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  color: #777E90;
+}
+
+.aw-search-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px 0 44px;
+  box-sizing: border-box;
+  background: #FFFFFF;
+  border: 1px solid #E6E8EC;
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  color: #2C3534;
+}
+
+.aw-search-input::placeholder {
+  color: #777E90;
+}
+
+.aw-search-input:focus {
+  outline: none;
+  border-color: #777E90;
+}
+
+/* Frame - app gallery */
+.aw-gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  gap: 32px;
+  width: 100%;
+  max-width: 1040px;
+}
+
+.aw-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  gap: 10px;
+  width: 180px;
+  height: 180px;
+  background: #FFFFFF;
+  border: 1px solid #E6E8EC;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  flex: none;
+}
+
+.aw-card:hover {
+  border-color: #2C3534;
+  box-shadow: 0 4px 12px rgba(44, 53, 52, 0.08);
+}
+
+.aw-card-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.aw-card-logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  flex: none;
+}
+
+.aw-card-title {
+  width: 100%;
+  max-width: 148px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 24px;
+  text-align: center;
+  letter-spacing: -0.01em;
+  color: #2C3534;
+  word-break: break-word;
+  flex: none;
+}
+
+/* Skeleton */
+.aw-skeleton {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: aw-skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes aw-skeleton-pulse {
+  0%, 100% { background-position: 200% 0; }
+  50% { background-position: -200% 0; }
+}
+
+.aw-skeleton-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  gap: 10px;
+  width: 180px;
+  height: 180px;
+  background: #FFFFFF;
+  border: 1px solid #E6E8EC;
+  border-radius: 16px;
+  flex: none;
+}
+
+.aw-skeleton-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  flex: none;
+}
+
+.aw-skeleton-line {
+  height: 24px;
+  border-radius: 4px;
+  width: 80%;
+  max-width: 120px;
+}
+
+/* Empty state */
+.aw-empty {
+  padding: 48px 24px;
+  text-align: center;
+  color: #777E90;
+  font-size: 17px;
+  line-height: 24px;
+}
+
+.aw-empty p {
+  margin: 0;
+}
+
+/* Error state */
+.aw-error {
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.aw-error p {
+  margin: 0 0 16px;
+  color: #777E90;
+  font-size: 17px;
+}
+
+.aw-retry {
+  padding: 16px 24px;
+  background: #FFFFFF;
+  color: #2C3534;
+  border: 2px solid #E6E8EC;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 24px;
+}
+
+.aw-retry:hover {
+  border-color: #2C3534;
+}
+
+/* Show more button */
+.aw-show-more {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 24px;
+  min-width: 139px;
+  height: 56px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: #FFFFFF;
+  border: 2px solid #E6E8EC;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  color: #2C3534;
+}
+
+.aw-show-more:hover:not(:disabled) {
+  border-color: #2C3534;
+}
+
+.aw-show-more:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Service detail - Triggers and actions gallery */
+.aw-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px;
+  gap: 32px;
+  max-width: 1200px;
+  width: 100%;
+  min-height: 1648px;
+  background: #FFFFFF;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .aw-detail {
+    padding: 24px 16px;
+    gap: 24px;
+  }
+}
+
+/* Frame 10 - Back button wrapper */
+.aw-detail-header {
+  position: relative;
+  width: 100%;
+  max-width: 1040px;
+  height: 56px;
+  flex: none;
+}
+
+.aw-detail-back {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 24px;
+  gap: 8px;
+  width: 116px;
+  height: 56px;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  color: #2C3534;
+}
+
+.aw-detail-back:hover {
+  background: #F4F5F6;
+}
+
+.aw-detail-back-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.aw-detail-title {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 0 -16px 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  text-align: center;
+  color: #2C3534;
+}
+
+.aw-detail-subtitle {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 24px;
+  text-align: center;
+  color: #A0A4B1;
+}
+
+/* Tab bar */
+.aw-detail-tabs {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.aw-detail-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  min-width: 80px;
+  height: 40px;
+  border-radius: 26px;
+  border: 1.5px solid transparent;
+  background: #FFFFFF;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  color: #2C3534;
+}
+
+.aw-detail-tab.active {
+  background: #2C3534;
+  color: #FFFFFF;
+  border-color: #2C3534;
+}
+
+.aw-detail-tab:not(.active) {
+  border-color: #E6E8EC;
+}
+
+.aw-detail-tab:not(.active):hover {
+  border-color: #2C3534;
+}
+
+/* Triggers / Actions sections */
+.aw-detail-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1040px;
+  gap: 24px;
+}
+
+.aw-detail-section.hidden {
+  display: none;
+}
+
+.aw-detail-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  gap: 24px;
+}
+
+.aw-detail-block + .aw-detail-block {
+  margin-top: 16px;
+}
+
+.aw-detail-section-title {
+  width: 100%;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: #A0A4B1;
+}
+
+/* Card gallery - rows of 3 */
+.aw-detail-gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 25px;
+  width: 100%;
+}
+
+.aw-detail-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 330px;
+  height: 136px;
+  background: #FFFFFF;
+  border: 1px solid #E6E8EC;
+  border-radius: 16px;
+  flex: none;
+  overflow: hidden;
+}
+
+@media (max-width: 1100px) {
+  .aw-detail-card {
+    width: calc((100% - 25px) / 2);
+    min-width: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .aw-detail-card {
+    width: 100%;
+  }
+}
+
+.aw-detail-card-top {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 16px;
+  gap: 10px;
+  flex: 1;
+  min-height: 0;
+}
+
+.aw-detail-card-logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.aw-detail-card-name {
+  flex: 1;
+  min-width: 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  color: #2C3534;
+}
+
+.aw-detail-card-footer {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 16px;
+  flex: 0 0 40px;
+  min-height: 40px;
+  background: #F4F5F6;
+  border-radius: 0 0 16px 16px;
+}
+
+.aw-detail-card-type {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  color: #A0A4B1;
+}
+
+/* Empty / Error states in detail */
+.aw-detail-empty,
+.aw-detail-error {
+  padding: 24px;
+  text-align: center;
+  color: #A0A4B1;
+  font-size: 17px;
+}
+
+.aw-detail-error .aw-retry {
+  margin-top: 12px;
+}
+
+/* Skeleton */
+.aw-skeleton-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px;
+  gap: 32px;
+  width: 100%;
+}
+
+.aw-skeleton-detail-title {
+  width: 100%;
+  max-width: 400px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+.aw-skeleton-detail-subtitle {
+  width: 100%;
+  max-width: 600px;
+  height: 24px;
+  border-radius: 8px;
+}
+
+.aw-skeleton-detail-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  width: 100%;
+  max-width: 1040px;
+}
+
+.aw-skeleton-detail-card {
+  width: 330px;
+  height: 136px;
+  border-radius: 16px;
+}
