@@ -10,15 +10,7 @@ npm run build
 
 Файл `dist/albato-widget.iife.js` будет создан.
 
-### Шаг 2. Включите GitHub Pages
-
-1. Откройте репозиторий на GitHub
-2. **Settings** → **Pages**
-3. В разделе **Source** выберите **Deploy from a branch**
-4. В **Branch** выберите `gh-pages` и папку `/ (root)`
-5. Нажмите **Save**
-
-### Шаг 3. Залейте содержимое dist на ветку gh-pages
+### Шаг 2. Залейте содержимое dist на ветку gh-pages
 
 **Способ A — через пакет gh-pages (проще):**
 
@@ -38,6 +30,16 @@ cd ..
 ```
 
 **Важно:** замените `USERNAME` и `REPO` на ваш username и название репозитория.
+
+Ветка `gh-pages` будет создана автоматически при первой публикации.
+
+### Шаг 3. Включите GitHub Pages
+
+1. Откройте репозиторий на GitHub
+2. **Settings** → **Pages**
+3. В разделе **Source** выберите **Deploy from a branch**
+4. В **Branch** выберите `gh-pages` и папку `/ (root)` (ветка появится в списке после Шага 2)
+5. Нажмите **Save**
 
 ### Шаг 4. URL виджета
 
