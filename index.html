@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Albato Apps Widget</title>
+  <style>
+    body {
+      font-family: system-ui;
+      margin: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .widget-container {
+      width: 1200px;
+      max-width: 100%;
+      min-height: 812px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Albato Apps Widget</h1>
+  <div id="albato-widget" class="widget-container"></div>
+  <script src="albato-widget.iife.js"></script>
+  <script>AlbatoWidget.initWidget({ container: document.getElementById('albato-widget') });</script>
+</body>
+</html>
