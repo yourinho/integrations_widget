@@ -8,7 +8,9 @@
 npm run build
 ```
 
-Файл `dist/albato-widget.iife.js` будет создан.
+Будут созданы:
+- `dist/albato-widget.iife.js` — виджет
+- `dist/index.html` — демо-страница (нужна для работы GitHub Pages)
 
 ### Шаг 2. Залейте содержимое dist на ветку gh-pages
 
@@ -132,5 +134,5 @@ jobs:
 
 ## Проверка
 
-1. Откройте `https://USERNAME.github.io/REPO/albato-widget.iife.js` — должен загружаться JS-файл
-2. Создайте тестовую HTML-страницу с примером встраивания и убедитесь, что виджет работает
+1. Откройте `https://USERNAME.github.io/REPO/` — должна загружаться демо-страница с виджетом
+2. Откройте `https://USERNAME.github.io/REPO/albato-widget.iife.js` — должен загружаться JS-файл

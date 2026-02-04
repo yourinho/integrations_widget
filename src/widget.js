@@ -13,6 +13,13 @@ const DEBOUNCE_MS = 300;
 
 let searchTimeout;
 
+function focusSearchInput(input) {
+  if (!input) return;
+  input.focus();
+  const len = input.value.length;
+  input.setSelectionRange(len, len);
+}
+
 function escapeHtml(s) {
   const div = document.createElement('div');
   div.textContent = s;
@@ -93,8 +100,13 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [] }
   if (searchEl) searchEl.disabled = false;
 
   const isLoadMore = page > 1 && accumulatedData.length > 0;
+  const hadSearchFocus = document.activeElement?.closest?.('.albato-widget')?.querySelector(`.${CSS_PREFIX}-search-input`) === document.activeElement;
+
   if (!isLoadMore) {
     root.innerHTML = renderLoadingState(search);
+    if (hadSearchFocus) {
+      requestAnimationFrame(() => focusSearchInput(root.querySelector(`.${CSS_PREFIX}-search-input`)));
+    }
   }
 
   fetchPartners(page, search)
@@ -104,6 +116,7 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [] }
       const isSearchEmpty = search && isEmpty;
       const totalPages = meta?.totalPages ?? 0;
       const hasNext = totalPages > 0 && page < totalPages;
+      const searchHadFocus = document.activeElement === root.querySelector(`.${CSS_PREFIX}-search-input`);
 
       root.innerHTML = `
         <div class="${CSS_PREFIX}-gallery-wrap">
@@ -141,6 +154,9 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [] }
               DEBOUNCE_MS
             );
           });
+          if (searchHadFocus) {
+            requestAnimationFrame(() => focusSearchInput(input));
+          }
         }
       };
       attachSearchHandler();
@@ -161,6 +177,8 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [] }
       }
     })
     .catch(() => {
+      const searchHadFocus = document.activeElement === root.querySelector(`.${CSS_PREFIX}-search-input`);
+
       root.innerHTML = `
         <div class="${CSS_PREFIX}-gallery-wrap">
           <h2 class="${CSS_PREFIX}-gallery-title">Available integrations</h2>
@@ -171,10 +189,16 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [] }
           </div>
         </div>
       `;
-      root.querySelector(`.${CSS_PREFIX}-search-input`).addEventListener('input', (e) => {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => mountGallery(container, { page: 1, search: e.target.value.trim() }), DEBOUNCE_MS);
-      });
+      const errInput = root.querySelector(`.${CSS_PREFIX}-search-input`);
+      if (errInput) {
+        errInput.addEventListener('input', (e) => {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => mountGallery(container, { page: 1, search: e.target.value.trim() }), DEBOUNCE_MS);
+        });
+        if (searchHadFocus) {
+          requestAnimationFrame(() => focusSearchInput(errInput));
+        }
+      }
       root.querySelector(`.${CSS_PREFIX}-retry`).addEventListener('click', () => mountGallery(container, { page, search }));
     });
 }
@@ -243,23 +267,6 @@ function mountServiceDetail(container, partner) {
       const triggersHtml = renderSection(triggersRes, 'This service has no available triggers', 'Failed to load triggers', 'triggers', 'Trigger');
       const actionsHtml = renderSection(actionsRes, 'This service has no available actions', 'Failed to load actions', 'actions', 'Action');
 
-      const hasTriggers = triggers.length > 0;
-      const hasActions = actions.length > 0;
-      const hasAll = hasTriggers || hasActions;
-
-      const allTabs = [
-        hasAll && { tab: 'all', label: 'Triggers&amp;Actions' },
-        hasTriggers && { tab: 'triggers', label: 'Triggers' },
-        hasActions && { tab: 'actions', label: 'Actions' },
-      ].filter(Boolean);
-
-      const firstTab = allTabs[0]?.tab || 'all';
-
-      const allSectionContent = [
-        hasTriggers && `<div class="${CSS_PREFIX}-detail-block"><h3 class="${CSS_PREFIX}-detail-section-title">TRIGGERS: ${triggers.length}</h3>${triggersHtml}</div>`,
-        hasActions && `<div class="${CSS_PREFIX}-detail-block"><h3 class="${CSS_PREFIX}-detail-section-title">ACTIONS: ${actions.length}</h3>${actionsHtml}</div>`,
-      ].filter(Boolean).join('');
-
       root.innerHTML = `
         <div class="${CSS_PREFIX}-detail">
           <div class="${CSS_PREFIX}-detail-header">
@@ -267,15 +274,29 @@ function mountServiceDetail(container, partner) {
           </div>
           <h2 class="${CSS_PREFIX}-detail-title">Triggers and actions for ${escapeHtml(title)} integrations</h2>
           <p class="${CSS_PREFIX}-detail-subtitle">Triggers detect changes in ${escapeHtml(title)}, and actions respond instantly — moving data or sending updates</p>
-          ${allTabs.length > 0 ? `
           <div class="${CSS_PREFIX}-detail-tabs">
-            ${allTabs.map((t) => `<button class="${CSS_PREFIX}-detail-tab ${t.tab === firstTab ? 'active' : ''}" data-tab="${t.tab}">${t.label}</button>`).join('')}
+            <button class="${CSS_PREFIX}-detail-tab active" data-tab="all">Triggers&amp;Actions</button>
+            <button class="${CSS_PREFIX}-detail-tab" data-tab="triggers">Triggers</button>
+            <button class="${CSS_PREFIX}-detail-tab" data-tab="actions">Actions</button>
           </div>
-          ` : ''}
-          ${hasAll ? `<div class="${CSS_PREFIX}-detail-section ${firstTab === 'all' ? '' : 'hidden'}" data-section="all">${allSectionContent}</div>` : ''}
-          ${hasTriggers ? `<div class="${CSS_PREFIX}-detail-section ${firstTab === 'triggers' ? '' : 'hidden'}" data-section="triggers"><h3 class="${CSS_PREFIX}-detail-section-title">TRIGGERS: ${triggers.length}</h3>${triggersHtml}</div>` : ''}
-          ${hasActions ? `<div class="${CSS_PREFIX}-detail-section ${firstTab === 'actions' ? '' : 'hidden'}" data-section="actions"><h3 class="${CSS_PREFIX}-detail-section-title">ACTIONS: ${actions.length}</h3>${actionsHtml}</div>` : ''}
-          ${!hasAll ? `<div class="${CSS_PREFIX}-detail-empty"><p>This service has no triggers or actions</p></div>` : ''}
+          <div class="${CSS_PREFIX}-detail-section" data-section="all">
+            <div class="${CSS_PREFIX}-detail-block">
+              <h3 class="${CSS_PREFIX}-detail-section-title">TRIGGERS: ${triggers.length}</h3>
+              ${triggersHtml}
+            </div>
+            <div class="${CSS_PREFIX}-detail-block">
+              <h3 class="${CSS_PREFIX}-detail-section-title">ACTIONS: ${actions.length}</h3>
+              ${actionsHtml}
+            </div>
+          </div>
+          <div class="${CSS_PREFIX}-detail-section hidden" data-section="triggers">
+            <h3 class="${CSS_PREFIX}-detail-section-title">TRIGGERS: ${triggers.length}</h3>
+            ${triggersHtml}
+          </div>
+          <div class="${CSS_PREFIX}-detail-section hidden" data-section="actions">
+            <h3 class="${CSS_PREFIX}-detail-section-title">ACTIONS: ${actions.length}</h3>
+            ${actionsHtml}
+          </div>
         </div>
       `;
 
