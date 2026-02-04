@@ -29,7 +29,7 @@ Place the container where you want the widget to appear. Load the script (either
 
 ## Full Example Page
 
-Here is a complete HTML page with the widget embedded:
+Here is a complete HTML page with the widget embedded, styled like the [demo page](https://yourinho.github.io/integrations_widget/):
 
 ```html
 <!DOCTYPE html>
@@ -39,20 +39,75 @@ Here is a complete HTML page with the widget embedded:
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Page with Integrations</title>
   <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 32px 20px 48px;
+      background: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .demo-header {
+      text-align: center;
+      margin-bottom: 24px;
+      max-width: 600px;
+    }
+    .demo-header h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #2C3534;
+    }
+    .demo-header p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #6b7280;
+    }
+    .demo-label {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #6b7280;
+      background: #e5e7eb;
+      border-radius: 6px;
+    }
+    .widget-wrapper {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 1200px;
+    }
     .widget-container {
       width: 100%;
       max-width: 1200px;
       min-height: 400px;
-      margin: 0 auto;
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Available Integrations</h1>
-  <div id="albato-widget" class="widget-container"></div>
+  <header class="demo-header">
+    <span class="demo-label">Demo page</span>
+    <h1>Albato Apps Widget</h1>
+    <p>This page demonstrates the embeddable integrations gallery. The widget is loaded into the container below. Copy the HTML structure to embed it on your own site.</p>
+  </header>
+  <div class="widget-wrapper">
+    <div id="albato-widget" class="widget-container"></div>
+  </div>
 
+  <!-- INSERT WIDGET SCRIPT BELOW: Load the widget and initialize it in your container -->
   <script src="https://yourinho.github.io/integrations_widget/albato-widget.iife.js"></script>
   <script>
+    // Mount the widget into the container (change "albato-widget" if you use a different id)
     AlbatoWidget.initWidget({
       container: document.getElementById('albato-widget')
     });
