@@ -39,13 +39,19 @@ function getDescription(obj) {
  * Initialize and mount the widget
  * @param {Object} options
  * @param {HTMLElement} options.container - DOM element to mount the widget into
+ * @param {number[]} [options.regions] - filter partners by region (e.g. [2, 3]). Omit to show all.
+ * @param {string} [options.font] - font-family for the widget (e.g. "Inter, sans-serif" or "'Open Sans', sans-serif")
  */
-export function initWidget({ container }) {
+export function initWidget({ container, regions, font }) {
   if (!container) {
     console.error('Albato Widget: container is required');
     return;
   }
   container.classList.add('albato-widget');
+  if (font) {
+    container.style.fontFamily = font;
+  }
+  container._awOptions = { regions: Array.isArray(regions) ? regions : undefined, font };
   if (!document.getElementById('albato-widget-styles')) {
     const styleEl = document.createElement('style');
     styleEl.id = 'albato-widget-styles';
@@ -57,7 +63,7 @@ export function initWidget({ container }) {
       ${renderLoadingState()}
     </div>
   `;
-  mountGallery(container, { page: 1, search: '' });
+  mountGallery(container, { page: 1, search: '', regions: container._awOptions?.regions });
 }
 
 const SEARCH_ICON = `<svg class="${CSS_PREFIX}-search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M14 14l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
@@ -94,8 +100,10 @@ function renderLoadingState(search = '') {
   `;
 }
 
-function mountGallery(container, { page = 1, search = '', accumulatedData = [] } = {}) {
+function mountGallery(container, { page = 1, search = '', accumulatedData = [], regions: regionsParam } = {}) {
   const root = container.querySelector(`.${CSS_PREFIX}-root`);
+  const regions = regionsParam ?? container._awOptions?.regions;
+
   const searchEl = root?.querySelector(`.${CSS_PREFIX}-search-input`);
   if (searchEl) searchEl.disabled = false;
 
@@ -107,10 +115,16 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [] }
     if (hadSearchFocus) {
       requestAnimationFrame(() => focusSearchInput(root.querySelector(`.${CSS_PREFIX}-search-input`)));
     }
+    container._awPartnerContinuation = null;
   }
 
-  fetchPartners(page, search)
-    .then(({ data, meta }) => {
+  const continuation = isLoadMore && regions ? container._awPartnerContinuation : null;
+
+  fetchPartners(page, search, regions, continuation)
+    .then(({ data, meta, continuation: nextContinuation }) => {
+      if (regions && nextContinuation) {
+        container._awPartnerContinuation = nextContinuation;
+      }
       const mergedData = isLoadMore ? [...accumulatedData, ...data] : data;
       const isEmpty = mergedData.length === 0;
       const isSearchEmpty = search && isEmpty;
@@ -150,7 +164,7 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [] }
           input.addEventListener('input', (e) => {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(
-              () => mountGallery(container, { page: 1, search: e.target.value.trim() }),
+              () => mountGallery(container, { page: 1, search: e.target.value.trim(), regions }),
               DEBOUNCE_MS
             );
           });
@@ -163,7 +177,7 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [] }
 
       if (!isEmpty) {
         root.querySelectorAll(`.${CSS_PREFIX}-card`).forEach((card) => {
-          const partner = data.find((p) => String(p.partnerId) === card.dataset.partnerId);
+          const partner = mergedData.find((p) => String(p.partnerId) === card.dataset.partnerId);
           card.addEventListener('click', () => mountServiceDetail(container, partner));
         });
         const showMoreBtn = root.querySelector(`.${CSS_PREFIX}-show-more`);
@@ -171,7 +185,7 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [] }
           showMoreBtn.addEventListener('click', () => {
             showMoreBtn.disabled = true;
             showMoreBtn.textContent = 'Loading...';
-            mountGallery(container, { page: page + 1, search, accumulatedData: mergedData });
+            mountGallery(container, { page: page + 1, search, accumulatedData: mergedData, regions });
           });
         }
       }
@@ -193,13 +207,13 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [] }
       if (errInput) {
         errInput.addEventListener('input', (e) => {
           clearTimeout(searchTimeout);
-          searchTimeout = setTimeout(() => mountGallery(container, { page: 1, search: e.target.value.trim() }), DEBOUNCE_MS);
+          searchTimeout = setTimeout(() => mountGallery(container, { page: 1, search: e.target.value.trim(), regions }), DEBOUNCE_MS);
         });
         if (searchHadFocus) {
           requestAnimationFrame(() => focusSearchInput(errInput));
         }
       }
-      root.querySelector(`.${CSS_PREFIX}-retry`).addEventListener('click', () => mountGallery(container, { page, search }));
+      root.querySelector(`.${CSS_PREFIX}-retry`).addEventListener('click', () => mountGallery(container, { page, search, regions }));
     });
 }
 

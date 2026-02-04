@@ -24,8 +24,19 @@ Output: `dist/albato-widget.iife.js`
 ```html
 <div id="albato-widget"></div>
 <script src="path/to/albato-widget.iife.js"></script>
-<script>AlbatoWidget.initWidget({ container: document.getElementById('albato-widget') });</script>
+<script>
+  AlbatoWidget.initWidget({
+    container: document.getElementById('albato-widget'),
+    regions: [2, 3],           // optional: only partners with region 2 or 3
+    font: "'Open Sans', sans-serif"  // optional: custom font
+  });
+</script>
 ```
+
+**Options:**
+- `container` (required) — DOM element to mount the widget
+- `regions` (optional) — array of region IDs to filter partners (e.g. `[2, 3]`). Omit to show all.
+- `font` (optional) — font-family string (e.g. `"Inter, sans-serif"` or `"'Open Sans', sans-serif"`). Load the font on your page first (e.g. via Google Fonts).
 
 See `examples/embed.html` for a full example.
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Albato Widget - Embed Example</title>
+  <title>Albato Widget - Regions Filter (2, 3)</title>
   <style>
     body {
       font-family: system-ui;
@@ -20,14 +20,13 @@
   </style>
 </head>
 <body>
-  <h1>Embed Example</h1>
+  <h1>Embed with regions filter (region=2, region=3)</h1>
   <div id="albato-widget" class="widget-container"></div>
   <script src="../dist/albato-widget.iife.js"></script>
   <script>
     AlbatoWidget.initWidget({
       container: document.getElementById('albato-widget'),
-      // regions: [2, 3],           // optional: only partners with region 2 or 3
-      // font: "'Open Sans', sans-serif"  // optional: custom font (load it on the page first)
+      regions: [2, 3]
     });
   </script>
 </body>

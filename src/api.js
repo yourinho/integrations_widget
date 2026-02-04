@@ -17,15 +17,18 @@ function buildUrl(path, params = {}) {
   return url.toString();
 }
 
-/**
- * @param {number} page
- * @param {string} search
- * @returns {Promise<{data: Array, meta: {page, totalPages, totalItemsCount}}>}
- */
-export async function fetchPartners(page = 1, search = '') {
+function filterByRegion(partners, regions) {
+  if (!Array.isArray(regions) || regions.length === 0) return partners;
+  return partners.filter((p) => {
+    const partnerRegions = Array.isArray(p.region) ? p.region : (p.region != null ? [p.region] : []);
+    return partnerRegions.some((r) => regions.includes(r));
+  });
+}
+
+async function fetchOnePartnersPage(apiPage, search) {
   const params = {
     'per-page': PER_PAGE_SERVICES,
-    page: String(page),
+    page: String(apiPage),
   };
   if (search) {
     params['filter[title][like]'] = search;
@@ -35,12 +38,64 @@ export async function fetchPartners(page = 1, search = '') {
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   const json = await res.json();
   if (!json.success) throw new Error('API returned success: false');
-  const filtered = (json.data || []).filter(
+  const baseFiltered = (json.data || []).filter(
     (p) => !p.deprecated && p.partnerId !== EXCLUDED_PARTNER_ID
   );
   return {
-    data: filtered,
-    meta: json.meta || { page: 1, totalPages: 1, totalItemsCount: filtered.length },
+    data: baseFiltered,
+    totalPages: json.meta?.totalPages ?? 1,
+  };
+}
+
+/**
+ * @param {number} page - widget page (1-based), used when no regions filter
+ * @param {string} search
+ * @param {number[]|null} [regions]
+ * @param {{ leftover: Array, nextApiPage: number }|null} [continuation] - for regions filter pagination
+ * @returns {Promise<{data: Array, meta: {page, totalPages, totalItemsCount}, continuation?: Object}>}
+ */
+export async function fetchPartners(page = 1, search = '', regions = null, continuation = null) {
+  const hasRegionFilter = Array.isArray(regions) && regions.length > 0;
+
+  if (!hasRegionFilter) {
+    const { data: raw, totalPages } = await fetchOnePartnersPage(page, search);
+    return {
+      data: raw,
+      meta: { page, totalPages, totalItemsCount: raw.length },
+    };
+  }
+
+  const targetCount = PER_PAGE_SERVICES;
+  let accumulated = continuation?.leftover ? [...continuation.leftover] : [];
+  let apiPage = continuation?.nextApiPage ?? 1;
+  let totalApiPages = null;
+
+  while (accumulated.length < targetCount) {
+    const { data: raw, totalPages } = await fetchOnePartnersPage(apiPage, search);
+    if (totalApiPages === null) totalApiPages = totalPages;
+
+    const filtered = filterByRegion(raw, regions);
+    accumulated = accumulated.concat(filtered);
+
+    if (apiPage >= totalApiPages) break;
+    apiPage++;
+  }
+
+  const result = accumulated.slice(0, targetCount);
+  const leftover = accumulated.slice(targetCount);
+  const hasMore = leftover.length > 0 || apiPage < totalApiPages;
+
+  return {
+    data: result,
+    meta: {
+      page,
+      totalPages: hasMore ? page + 1 : page,
+      totalItemsCount: result.length,
+    },
+    continuation: {
+      leftover,
+      nextApiPage: apiPage + 1,
+    },
   };
 }
 
