@@ -212,11 +212,55 @@ If `font` is omitted, the widget uses Inter by default.
 
 ---
 
+## Resilient embed (handling script load failure)
+
+If the widget script fails to load (network issues, CDN down, ad blocker, etc.), the embed area may appear empty or broken. To avoid this, use dynamic loading with a fallback:
+
+```html
+<div id="albato-widget" class="widget-container">
+  <p>Loading integrations...</p>
+</div>
+
+<script>
+  (function() {
+    var container = document.getElementById('albato-widget');
+    var script = document.createElement('script');
+    script.src = 'https://yourinho.github.io/integrations_widget/albato-widget.iife.js';
+
+    script.onload = function() {
+      container.innerHTML = '';
+      AlbatoWidget.initWidget({
+        container: container,
+        regions: [2, 3],  // optional
+        font: "'Inter', sans-serif"  // optional
+      });
+    };
+
+    script.onerror = function() {
+      // Show fallback content if the script fails to load
+      container.innerHTML = '<p>View our <a href="/integrations">available integrations</a>.</p>';
+    };
+
+    document.head.appendChild(script);
+  })();
+</script>
+```
+
+**What this does:**
+- Loads the widget script dynamically
+- On success: clears the container and initializes the widget
+- On failure: replaces the content with fallback HTML (e.g. a link to your integrations page)
+
+Customize the fallback content in `onerror` to match your site (link, message, or hide the block).
+
+---
+
 ## Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
 | Widget does not appear | Ensure the script loads after the container exists. Check the browser console for errors. |
+| Script fails to load | Use the [Resilient embed](#resilient-embed-handling-script-load-failure) pattern with fallback content. |
 | Wrong integrations shown | Verify the `regions` option if you use it. Use only numeric IDs, e.g. `[2, 3]`. |
 | Font looks different | Load your font (e.g. from Google Fonts) before the widget script, and pass the `font` option. |
 
