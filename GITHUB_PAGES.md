@@ -50,7 +50,7 @@ cd ..
 Виджет будет доступен по адресу:
 
 ```
-https://USERNAME.github.io/REPO/albato-widget.iife.js
+https://yourinho.github.io/integrations_widget/albato-widget.iife.js
 ```
 
 **Повторный деплой при обновлении виджета:**
@@ -64,7 +64,7 @@ https://USERNAME.github.io/REPO/albato-widget.iife.js
 
 ```html
 <div id="albato-widget"></div>
-<script src="https://USERNAME.github.io/REPO/albato-widget.iife.js"></script>
+<script src="https://yourinho.github.io/integrations_widget/albato-widget.iife.js"></script>
 <script>AlbatoWidget.initWidget({ container: document.getElementById('albato-widget') });</script>
 ```
 
@@ -134,5 +134,5 @@ jobs:
 
 ## Проверка
 
-1. Откройте `https://USERNAME.github.io/REPO/` — должна загружаться демо-страница с виджетом
-2. Откройте `https://USERNAME.github.io/REPO/albato-widget.iife.js` — должен загружаться JS-файл
+1. Откройте `https://yourinho.github.io/integrations_widget/` — должна загружаться демо-страница с виджетом
+2. Откройте `https://yourinho.github.io/integrations_widget/albato-widget.iife.js` — должен загружаться JS-файл

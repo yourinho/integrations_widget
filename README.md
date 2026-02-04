@@ -23,7 +23,7 @@ Output: `dist/albato-widget.iife.js`
 
 ```html
 <div id="albato-widget"></div>
-<script src="path/to/albato-widget.iife.js"></script>
+<script src="https://yourinho.github.io/integrations_widget/albato-widget.iife.js"></script>
 <script>
   AlbatoWidget.initWidget({
     container: document.getElementById('albato-widget'),
@@ -48,4 +48,4 @@ See `examples/embed.html` for a full example.
 
 1. Соберите проект: `npm run build`
 2. Опубликуйте папку `dist/` на GitHub Pages (ветка `gh-pages` или GitHub Actions)
-3. Виджет будет доступен по адресу: `https://USERNAME.github.io/REPO/albato-widget.iife.js`
+3. Виджет будет доступен по адресу: `https://yourinho.github.io/integrations_widget/albato-widget.iife.js`
