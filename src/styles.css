@@ -619,6 +619,34 @@
   gap: 24px;
 }
 
+/* Two columns layout - triggers left, actions right, centered */
+.aw-detail-columns {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 32px;
+  width: 100%;
+  max-width: 1040px;
+}
+
+.aw-detail-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  min-width: 0;
+  max-width: 500px;
+}
+
+@media (max-width: 900px) {
+  .aw-detail-columns {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 .aw-detail-section.hidden {
   display: none;
 }

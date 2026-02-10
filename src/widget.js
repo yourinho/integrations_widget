@@ -37,6 +37,7 @@ function getDescription(obj) {
 
 const COLOR_KEYS = ['primary', 'background', 'surface', 'text', 'textMuted', 'border', 'textOnPrimary'];
 const CARD_SIZES = ['s', 'm', 'l'];
+const DETAIL_LAYOUTS = ['stacked', 'columns'];
 
 /**
  * Initialize and mount the widget
@@ -47,8 +48,9 @@ const CARD_SIZES = ['s', 'm', 'l'];
  * @param {Object} [options.colors] - optional color overrides: primary, background, surface, text, textMuted, border, textOnPrimary
  * @param {string} [options.cardSize] - partner card size: 'l' (180px, default), 'm' (150px), 's' (120px)
  * @param {string} [options.detailCardSize] - trigger/action card size: 'l' (330×136px, default), 'm' (270×112px), 's' (210×88px)
+ * @param {string} [options.detailLayout] - detail view layout: 'stacked' (blocks under each other, default), 'columns' (triggers and actions in two columns)
  */
-export function initWidget({ container, regions, font, colors, cardSize, detailCardSize }) {
+export function initWidget({ container, regions, font, colors, cardSize, detailCardSize, detailLayout }) {
   if (!container) {
     console.error('Albato Widget: container is required');
     return;
@@ -58,6 +60,8 @@ export function initWidget({ container, regions, font, colors, cardSize, detailC
   container.setAttribute('data-card-size', size);
   const detailSize = typeof detailCardSize === 'string' && CARD_SIZES.includes(detailCardSize.toLowerCase()) ? detailCardSize.toLowerCase() : 'l';
   container.setAttribute('data-detail-card-size', detailSize);
+  const layout = typeof detailLayout === 'string' && DETAIL_LAYOUTS.includes(detailLayout.toLowerCase()) ? detailLayout.toLowerCase() : 'stacked';
+  container.setAttribute('data-detail-layout', layout);
   if (font) {
     container.style.fontFamily = font;
   }
@@ -70,7 +74,7 @@ export function initWidget({ container, regions, font, colors, cardSize, detailC
       }
     });
   }
-  container._awOptions = { regions: Array.isArray(regions) ? regions : undefined, font, colors, cardSize: size, detailCardSize: detailSize };
+  container._awOptions = { regions: Array.isArray(regions) ? regions : undefined, font, colors, cardSize: size, detailCardSize: detailSize, detailLayout: layout };
   if (!document.getElementById('albato-widget-styles')) {
     const styleEl = document.createElement('style');
     styleEl.id = 'albato-widget-styles';
@@ -300,6 +304,48 @@ function mountServiceDetail(container, partner) {
       const triggersHtml = renderSection(triggersRes, 'This service has no available triggers', 'Failed to load triggers', 'triggers', 'Trigger');
       const actionsHtml = renderSection(actionsRes, 'This service has no available actions', 'Failed to load actions', 'actions', 'Action');
 
+      const layout = container._awOptions?.detailLayout || 'stacked';
+      const isColumns = layout === 'columns';
+
+      const contentHtml = isColumns
+        ? `
+        <div class="${CSS_PREFIX}-detail-columns">
+          <div class="${CSS_PREFIX}-detail-column">
+            <h3 class="${CSS_PREFIX}-detail-section-title">TRIGGERS: ${triggers.length}</h3>
+            ${triggersHtml}
+          </div>
+          <div class="${CSS_PREFIX}-detail-column">
+            <h3 class="${CSS_PREFIX}-detail-section-title">ACTIONS: ${actions.length}</h3>
+            ${actionsHtml}
+          </div>
+        </div>
+      `
+        : `
+        <div class="${CSS_PREFIX}-detail-tabs">
+          <button class="${CSS_PREFIX}-detail-tab active" data-tab="all">Triggers&amp;Actions</button>
+          <button class="${CSS_PREFIX}-detail-tab" data-tab="triggers">Triggers</button>
+          <button class="${CSS_PREFIX}-detail-tab" data-tab="actions">Actions</button>
+        </div>
+        <div class="${CSS_PREFIX}-detail-section" data-section="all">
+          <div class="${CSS_PREFIX}-detail-block">
+            <h3 class="${CSS_PREFIX}-detail-section-title">TRIGGERS: ${triggers.length}</h3>
+            ${triggersHtml}
+          </div>
+          <div class="${CSS_PREFIX}-detail-block">
+            <h3 class="${CSS_PREFIX}-detail-section-title">ACTIONS: ${actions.length}</h3>
+            ${actionsHtml}
+          </div>
+        </div>
+        <div class="${CSS_PREFIX}-detail-section hidden" data-section="triggers">
+          <h3 class="${CSS_PREFIX}-detail-section-title">TRIGGERS: ${triggers.length}</h3>
+          ${triggersHtml}
+        </div>
+        <div class="${CSS_PREFIX}-detail-section hidden" data-section="actions">
+          <h3 class="${CSS_PREFIX}-detail-section-title">ACTIONS: ${actions.length}</h3>
+          ${actionsHtml}
+        </div>
+      `;
+
       root.innerHTML = `
         <div class="${CSS_PREFIX}-detail">
           <div class="${CSS_PREFIX}-detail-header">
@@ -307,29 +353,7 @@ function mountServiceDetail(container, partner) {
           </div>
           <h2 class="${CSS_PREFIX}-detail-title">Triggers and actions for ${escapeHtml(title)} integrations</h2>
           <p class="${CSS_PREFIX}-detail-subtitle">Triggers detect changes in ${escapeHtml(title)}, and actions respond instantly — moving data or sending updates</p>
-          <div class="${CSS_PREFIX}-detail-tabs">
-            <button class="${CSS_PREFIX}-detail-tab active" data-tab="all">Triggers&amp;Actions</button>
-            <button class="${CSS_PREFIX}-detail-tab" data-tab="triggers">Triggers</button>
-            <button class="${CSS_PREFIX}-detail-tab" data-tab="actions">Actions</button>
-          </div>
-          <div class="${CSS_PREFIX}-detail-section" data-section="all">
-            <div class="${CSS_PREFIX}-detail-block">
-              <h3 class="${CSS_PREFIX}-detail-section-title">TRIGGERS: ${triggers.length}</h3>
-              ${triggersHtml}
-            </div>
-            <div class="${CSS_PREFIX}-detail-block">
-              <h3 class="${CSS_PREFIX}-detail-section-title">ACTIONS: ${actions.length}</h3>
-              ${actionsHtml}
-            </div>
-          </div>
-          <div class="${CSS_PREFIX}-detail-section hidden" data-section="triggers">
-            <h3 class="${CSS_PREFIX}-detail-section-title">TRIGGERS: ${triggers.length}</h3>
-            ${triggersHtml}
-          </div>
-          <div class="${CSS_PREFIX}-detail-section hidden" data-section="actions">
-            <h3 class="${CSS_PREFIX}-detail-section-title">ACTIONS: ${actions.length}</h3>
-            ${actionsHtml}
-          </div>
+          ${contentHtml}
         </div>
       `;
 
@@ -338,14 +362,16 @@ function mountServiceDetail(container, partner) {
         mountGallery(container, { page: 1, search: '' });
       });
 
-      root.querySelectorAll(`.${CSS_PREFIX}-detail-tab`).forEach((tab) => {
-        tab.addEventListener('click', () => {
-          root.querySelectorAll(`.${CSS_PREFIX}-detail-tab`).forEach((t) => t.classList.remove('active'));
-          tab.classList.add('active');
-          root.querySelectorAll(`.${CSS_PREFIX}-detail-section`).forEach((s) => s.classList.add('hidden'));
-          root.querySelector(`.${CSS_PREFIX}-detail-section[data-section="${tab.dataset.tab}"]`).classList.remove('hidden');
+      if (!isColumns) {
+        root.querySelectorAll(`.${CSS_PREFIX}-detail-tab`).forEach((tab) => {
+          tab.addEventListener('click', () => {
+            root.querySelectorAll(`.${CSS_PREFIX}-detail-tab`).forEach((t) => t.classList.remove('active'));
+            tab.classList.add('active');
+            root.querySelectorAll(`.${CSS_PREFIX}-detail-section`).forEach((s) => s.classList.add('hidden'));
+            root.querySelector(`.${CSS_PREFIX}-detail-section[data-section="${tab.dataset.tab}"]`).classList.remove('hidden');
+          });
         });
-      });
+      }
 
       root.querySelectorAll(`[data-retry]`).forEach((el) => {
         const btn = el.querySelector(`.${CSS_PREFIX}-retry`);

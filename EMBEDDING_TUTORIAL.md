@@ -132,6 +132,7 @@ Here is a complete HTML page with the widget embedded, styled like the [demo pag
 | `colors`    | No      | Object with color overrides for branding: `primary`, `background`, `surface`, `text`, `textMuted`, `border`, `textOnPrimary`. |
 | `cardSize`      | No      | Partner card size: `'l'` (180px, default), `'m'` (150px), `'s'` (120px). |
 | `detailCardSize`| No      | Trigger/action card size: `'l'` (330×136px, default), `'m'` (270×112px), `'s'` (210×88px). |
+| `detailLayout`  | No      | Detail view layout: `'stacked'` (default), `'columns'` (triggers and actions in two columns, no tabs). |
 
 ### Example with All Options
 
@@ -259,6 +260,23 @@ detailCardSize: 'm'
 ```
 
 On mobile, cards adapt to fit the screen width regardless of this setting.
+
+---
+
+### `detailLayout` (optional)
+
+Choose how triggers and actions are displayed on the service detail page:
+
+| Value | Description |
+|-------|-------------|
+| `'stacked'` | Blocks one under another, with tabs (Triggers&Actions, Triggers, Actions). Default. |
+| `'columns'` | Two columns side by side: triggers on the left, actions on the right. Tab bar is hidden, both sections always visible. Columns are centered. |
+
+```javascript
+detailLayout: 'columns'
+```
+
+On screens under 900px, columns stack vertically.
 
 ---
 
