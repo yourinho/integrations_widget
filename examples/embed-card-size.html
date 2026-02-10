@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Albato Widget — Dark Theme Example</title>
+  <title>Albato Widget — Card Size Example</title>
   <style>
     * { box-sizing: border-box; }
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       margin: 0;
       padding: 32px 20px 48px;
-      background: #1a1d21;
+      background: #f8f9fa;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -24,13 +24,19 @@
       margin: 0 0 8px;
       font-size: 28px;
       font-weight: 700;
-      color: #f4f5f6;
+      color: #2C3534;
     }
     .demo-header p {
       margin: 0;
       font-size: 15px;
       line-height: 1.5;
-      color: #9ca3af;
+      color: #6b7280;
+    }
+    .demo-header code {
+      padding: 2px 6px;
+      font-size: 13px;
+      background: #e5e7eb;
+      border-radius: 4px;
     }
     .demo-label {
       display: inline-block;
@@ -40,14 +46,14 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: #9ca3af;
-      background: #2d3139;
+      color: #6b7280;
+      background: #e5e7eb;
       border-radius: 6px;
     }
     .widget-wrapper {
-      background: #25282e;
+      background: #fff;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
       overflow-x: hidden;
       width: 100%;
       max-width: 1200px;
@@ -62,9 +68,9 @@
 </head>
 <body>
   <header class="demo-header">
-    <span class="demo-label">Dark theme example</span>
+    <span class="demo-label">Card size example</span>
     <h1>Albato Apps Widget</h1>
-    <p>Widget with dark theme configured via the <code>colors</code> option.</p>
+    <p>Widget with <code>cardSize: 'm'</code> — medium cards (150×150px). Try <code>'s'</code> for small or <code>'l'</code> for large (default).</p>
   </header>
   <div class="widget-wrapper">
     <div id="albato-widget" class="widget-container"></div>
@@ -73,15 +79,7 @@
   <script>
     AlbatoWidget.initWidget({
       container: document.getElementById('albato-widget'),
-      colors: {
-        primary: '#FF7A59',
-        background: '#25282e',
-        surface: '#1f2228',
-        text: '#f4f5f6',
-        textMuted: '#9ca3af',
-        border: '#3d424b',
-        textOnPrimary: '#1a1d21'
-      }
+      cardSize: 'm'
     });
   </script>
 </body>

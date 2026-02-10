@@ -39,6 +39,7 @@ Output: `dist/albato-widget.iife.js`
 - `regions` (optional) — array of region IDs to filter partners (e.g. `[2, 3]`). Omit to show all.
 - `font` (optional) — font-family string (e.g. `"Inter, sans-serif"` or `"'Open Sans', sans-serif"`). Load the font on your page first (e.g. via Google Fonts).
 - `colors` (optional) — object with color overrides: `primary`, `background`, `surface`, `text`, `textMuted`, `border`, `textOnPrimary`. Pass only the keys you want to override.
+- `cardSize` (optional) — partner card size: `'l'` (180px, default), `'m'` (150px), `'s'` (120px).
 
 See `examples/embed.html` for a full example.
 

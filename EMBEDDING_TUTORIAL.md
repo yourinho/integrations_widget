@@ -130,6 +130,7 @@ Here is a complete HTML page with the widget embedded, styled like the [demo pag
 | `regions`   | No      | Array of region IDs to filter integrations. `2` = BR (Brazil), `3` = global. Omit to show all. |
 | `font`      | No      | Custom font-family for the widget (e.g. `"Inter, sans-serif"`). Load the font on your page first. |
 | `colors`    | No      | Object with color overrides for branding: `primary`, `background`, `surface`, `text`, `textMuted`, `border`, `textOnPrimary`. |
+| `cardSize`  | No      | Partner card size: `'l'` (180px, default), `'m'` (150px), `'s'` (120px). |
 
 ### Example with All Options
 
@@ -140,7 +141,8 @@ Here is a complete HTML page with the widget embedded, styled like the [demo pag
     container: document.getElementById('albato-widget'),
     regions: [2, 3],
     font: "'Open Sans', sans-serif",
-    colors: { primary: '#1a56db', textMuted: '#6b7280' }
+    colors: { primary: '#1a56db', textMuted: '#6b7280' },
+    cardSize: 'm'
   });
 </script>
 ```
@@ -220,6 +222,24 @@ colors: { primary: '#1a56db', textMuted: '#6b7280' }
 ```
 
 Values must be valid CSS color strings (hex, rgb, etc.).
+
+---
+
+### `cardSize` (optional)
+
+Choose the size of partner cards in the gallery:
+
+| Value | Size | Description |
+|-------|------|-------------|
+| `'l'` | 180×180px | Large (default) |
+| `'m'` | 150×150px | Medium |
+| `'s'` | 120×120px | Small |
+
+```javascript
+cardSize: 'm'
+```
+
+On mobile, cards adapt to fit the screen width regardless of this setting.
 
 ---
 

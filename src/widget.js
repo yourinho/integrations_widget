@@ -36,6 +36,7 @@ function getDescription(obj) {
 }
 
 const COLOR_KEYS = ['primary', 'background', 'surface', 'text', 'textMuted', 'border', 'textOnPrimary'];
+const CARD_SIZES = ['s', 'm', 'l'];
 
 /**
  * Initialize and mount the widget
@@ -44,13 +45,16 @@ const COLOR_KEYS = ['primary', 'background', 'surface', 'text', 'textMuted', 'bo
  * @param {number[]} [options.regions] - filter partners by region (e.g. [2, 3]). Omit to show all.
  * @param {string} [options.font] - font-family for the widget (e.g. "Inter, sans-serif" or "'Open Sans', sans-serif")
  * @param {Object} [options.colors] - optional color overrides: primary, background, surface, text, textMuted, border, textOnPrimary
+ * @param {string} [options.cardSize] - partner card size: 'l' (180px, default), 'm' (150px), 's' (120px)
  */
-export function initWidget({ container, regions, font, colors }) {
+export function initWidget({ container, regions, font, colors, cardSize }) {
   if (!container) {
     console.error('Albato Widget: container is required');
     return;
   }
   container.classList.add('albato-widget');
+  const size = typeof cardSize === 'string' && CARD_SIZES.includes(cardSize.toLowerCase()) ? cardSize.toLowerCase() : 'l';
+  container.setAttribute('data-card-size', size);
   if (font) {
     container.style.fontFamily = font;
   }
@@ -63,7 +67,7 @@ export function initWidget({ container, regions, font, colors }) {
       }
     });
   }
-  container._awOptions = { regions: Array.isArray(regions) ? regions : undefined, font, colors };
+  container._awOptions = { regions: Array.isArray(regions) ? regions : undefined, font, colors, cardSize: size };
   if (!document.getElementById('albato-widget-styles')) {
     const styleEl = document.createElement('style');
     styleEl.id = 'albato-widget-styles';
