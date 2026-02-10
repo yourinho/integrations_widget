@@ -35,14 +35,17 @@ function getDescription(obj) {
   return obj.description || obj.descriptionEn || '';
 }
 
+const COLOR_KEYS = ['primary', 'background', 'surface', 'text', 'textMuted', 'border', 'textOnPrimary'];
+
 /**
  * Initialize and mount the widget
  * @param {Object} options
  * @param {HTMLElement} options.container - DOM element to mount the widget into
  * @param {number[]} [options.regions] - filter partners by region (e.g. [2, 3]). Omit to show all.
  * @param {string} [options.font] - font-family for the widget (e.g. "Inter, sans-serif" or "'Open Sans', sans-serif")
+ * @param {Object} [options.colors] - optional color overrides: primary, background, surface, text, textMuted, border, textOnPrimary
  */
-export function initWidget({ container, regions, font }) {
+export function initWidget({ container, regions, font, colors }) {
   if (!container) {
     console.error('Albato Widget: container is required');
     return;
@@ -51,7 +54,16 @@ export function initWidget({ container, regions, font }) {
   if (font) {
     container.style.fontFamily = font;
   }
-  container._awOptions = { regions: Array.isArray(regions) ? regions : undefined, font };
+  if (colors && typeof colors === 'object') {
+    COLOR_KEYS.forEach((key) => {
+      const value = colors[key];
+      if (typeof value === 'string' && value.trim()) {
+        const varName = `--aw-color-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
+        container.style.setProperty(varName, value.trim());
+      }
+    });
+  }
+  container._awOptions = { regions: Array.isArray(regions) ? regions : undefined, font, colors };
   if (!document.getElementById('albato-widget-styles')) {
     const styleEl = document.createElement('style');
     styleEl.id = 'albato-widget-styles';

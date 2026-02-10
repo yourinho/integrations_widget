@@ -28,7 +28,8 @@ Output: `dist/albato-widget.iife.js`
   AlbatoWidget.initWidget({
     container: document.getElementById('albato-widget'),
     regions: [2, 3],           // optional: only partners with region 2 or 3
-    font: "'Open Sans', sans-serif"  // optional: custom font
+    font: "'Open Sans', sans-serif",  // optional: custom font
+    colors: { primary: '#1a56db', textMuted: '#6b7280' }  // optional: brand colors
   });
 </script>
 ```
@@ -37,6 +38,7 @@ Output: `dist/albato-widget.iife.js`
 - `container` (required) — DOM element to mount the widget
 - `regions` (optional) — array of region IDs to filter partners (e.g. `[2, 3]`). Omit to show all.
 - `font` (optional) — font-family string (e.g. `"Inter, sans-serif"` or `"'Open Sans', sans-serif"`). Load the font on your page first (e.g. via Google Fonts).
+- `colors` (optional) — object with color overrides: `primary`, `background`, `surface`, `text`, `textMuted`, `border`, `textOnPrimary`. Pass only the keys you want to override.
 
 See `examples/embed.html` for a full example.
 

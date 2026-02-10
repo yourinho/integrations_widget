@@ -129,6 +129,7 @@ Here is a complete HTML page with the widget embedded, styled like the [demo pag
 | `container` | **Yes** | The DOM element where the widget will be mounted. Usually a `<div>`. |
 | `regions`   | No      | Array of region IDs to filter integrations. `2` = BR (Brazil), `3` = global. Omit to show all. |
 | `font`      | No      | Custom font-family for the widget (e.g. `"Inter, sans-serif"`). Load the font on your page first. |
+| `colors`    | No      | Object with color overrides for branding: `primary`, `background`, `surface`, `text`, `textMuted`, `border`, `textOnPrimary`. |
 
 ### Example with All Options
 
@@ -138,7 +139,8 @@ Here is a complete HTML page with the widget embedded, styled like the [demo pag
   AlbatoWidget.initWidget({
     container: document.getElementById('albato-widget'),
     regions: [2, 3],
-    font: "'Open Sans', sans-serif"
+    font: "'Open Sans', sans-serif",
+    colors: { primary: '#1a56db', textMuted: '#6b7280' }
   });
 </script>
 ```
@@ -194,6 +196,30 @@ Load the font on your page first, for example via Google Fonts:
 ```
 
 If `font` is omitted, the widget uses Inter by default.
+
+---
+
+### `colors` (optional)
+
+To match the widget’s colors to your brand, pass an object with one or more of these keys:
+
+| Key | Role | Default |
+|-----|------|---------|
+| `primary` | Active tab, hover states, accents | `#2C3534` |
+| `background` | Cards, panels, inputs | `#FFFFFF` |
+| `surface` | Card footers, hover areas | `#F4F5F6` |
+| `text` | Main text | `#2C3534` |
+| `textMuted` | Secondary text, placeholders | `#A0A4B1` |
+| `border` | Borders, dividers | `#E6E8EC` |
+| `textOnPrimary` | Text on primary background | `#FFFFFF` |
+
+You can override only the colors you need:
+
+```javascript
+colors: { primary: '#1a56db', textMuted: '#6b7280' }
+```
+
+Values must be valid CSS color strings (hex, rgb, etc.).
 
 ---
 

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Albato Widget — Dark Theme Example</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 32px 20px 48px;
+      background: #1a1d21;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .demo-header {
+      text-align: center;
+      margin-bottom: 24px;
+      max-width: 600px;
+    }
+    .demo-header h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #f4f5f6;
+    }
+    .demo-header p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #9ca3af;
+    }
+    .demo-label {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #9ca3af;
+      background: #2d3139;
+      border-radius: 6px;
+    }
+    .widget-wrapper {
+      background: #25282e;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .widget-container {
+      width: 100%;
+      max-width: 1200px;
+      min-height: 400px;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="demo-header">
+    <span class="demo-label">Dark theme example</span>
+    <h1>Albato Apps Widget</h1>
+    <p>Widget with dark theme configured via the <code>colors</code> option.</p>
+  </header>
+  <div class="widget-wrapper">
+    <div id="albato-widget" class="widget-container"></div>
+  </div>
+  <script src="https://yourinho.github.io/integrations_widget/albato-widget.iife.js"></script>
+  <script>
+    AlbatoWidget.initWidget({
+      container: document.getElementById('albato-widget'),
+      colors: {
+        primary: '#60a5fa',
+        background: '#25282e',
+        surface: '#1f2228',
+        text: '#f4f5f6',
+        textMuted: '#9ca3af',
+        border: '#3d424b',
+        textOnPrimary: '#1a1d21'
+      }
+    });
+  </script>
+</body>
+</html>
