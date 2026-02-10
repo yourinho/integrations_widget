@@ -660,6 +660,7 @@
   }
 }
 
+/* Detail card size L (default): 330x136 */
 .aw-detail-card {
   box-sizing: border-box;
   display: flex;
@@ -675,10 +676,30 @@
   overflow: hidden;
 }
 
+/* Detail card size M: 270x112 */
+.albato-widget[data-detail-card-size="m"] .aw-detail-card {
+  width: 270px;
+  height: 112px;
+}
+
+/* Detail card size S: 210x88 */
+.albato-widget[data-detail-card-size="s"] .aw-detail-card {
+  width: 210px;
+  height: 88px;
+}
+
 @media (max-width: 1100px) {
   .aw-detail-card {
     width: calc((100% - 25px) / 2);
     min-width: 0;
+  }
+  .albato-widget[data-detail-card-size="m"] .aw-detail-card {
+    height: auto;
+    min-height: 100px;
+  }
+  .albato-widget[data-detail-card-size="s"] .aw-detail-card {
+    height: auto;
+    min-height: 88px;
   }
 }
 
@@ -688,12 +709,24 @@
     height: auto;
     min-height: 120px;
   }
+  .albato-widget[data-detail-card-size="m"] .aw-detail-card {
+    min-height: 100px;
+  }
+  .albato-widget[data-detail-card-size="s"] .aw-detail-card {
+    min-height: 88px;
+  }
 }
 
 @media (max-width: 480px) {
   .aw-detail-card {
     width: calc((100% - 16px) / 2);
     min-height: 110px;
+  }
+  .albato-widget[data-detail-card-size="m"] .aw-detail-card {
+    min-height: 100px;
+  }
+  .albato-widget[data-detail-card-size="s"] .aw-detail-card {
+    min-height: 88px;
   }
 }
 
@@ -714,11 +747,31 @@
   min-height: 0;
 }
 
+.albato-widget[data-detail-card-size="m"] .aw-detail-card-top {
+  padding: 12px;
+  gap: 8px;
+}
+
+.albato-widget[data-detail-card-size="s"] .aw-detail-card-top {
+  padding: 10px;
+  gap: 6px;
+}
+
 .aw-detail-card-logo {
   width: 64px;
   height: 64px;
   object-fit: contain;
   flex-shrink: 0;
+}
+
+.albato-widget[data-detail-card-size="m"] .aw-detail-card-logo {
+  width: 52px;
+  height: 52px;
+}
+
+.albato-widget[data-detail-card-size="s"] .aw-detail-card-logo {
+  width: 40px;
+  height: 40px;
 }
 
 .aw-detail-card-name {
@@ -730,6 +783,16 @@
   line-height: 24px;
   letter-spacing: -0.01em;
   color: var(--aw-color-text);
+}
+
+.albato-widget[data-detail-card-size="m"] .aw-detail-card-name {
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.albato-widget[data-detail-card-size="s"] .aw-detail-card-name {
+  font-size: 13px;
+  line-height: 18px;
 }
 
 .aw-detail-card-footer {
@@ -744,6 +807,18 @@
   border-radius: 0 0 16px 16px;
 }
 
+.albato-widget[data-detail-card-size="m"] .aw-detail-card-footer {
+  padding: 6px 12px;
+  flex: 0 0 36px;
+  min-height: 36px;
+}
+
+.albato-widget[data-detail-card-size="s"] .aw-detail-card-footer {
+  padding: 4px 10px;
+  flex: 0 0 32px;
+  min-height: 32px;
+}
+
 .aw-detail-card-type {
   font-family: 'Inter', sans-serif;
   font-weight: 600;
@@ -751,6 +826,16 @@
   line-height: 24px;
   letter-spacing: -0.01em;
   color: var(--aw-color-text-muted);
+}
+
+.albato-widget[data-detail-card-size="m"] .aw-detail-card-type {
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.albato-widget[data-detail-card-size="s"] .aw-detail-card-type {
+  font-size: 13px;
+  line-height: 18px;
 }
 
 /* Empty / Error states in detail */
@@ -809,4 +894,14 @@
   width: 330px;
   height: 136px;
   border-radius: 16px;
+}
+
+.albato-widget[data-detail-card-size="m"] .aw-skeleton-detail-card {
+  width: 270px;
+  height: 112px;
+}
+
+.albato-widget[data-detail-card-size="s"] .aw-skeleton-detail-card {
+  width: 210px;
+  height: 88px;
 }

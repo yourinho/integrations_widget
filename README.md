@@ -40,6 +40,7 @@ Output: `dist/albato-widget.iife.js`
 - `font` (optional) — font-family string (e.g. `"Inter, sans-serif"` or `"'Open Sans', sans-serif"`). Load the font on your page first (e.g. via Google Fonts).
 - `colors` (optional) — object with color overrides: `primary`, `background`, `surface`, `text`, `textMuted`, `border`, `textOnPrimary`. Pass only the keys you want to override.
 - `cardSize` (optional) — partner card size: `'l'` (180px, default), `'m'` (150px), `'s'` (120px).
+- `detailCardSize` (optional) — trigger/action card size: `'l'` (330×136px, default), `'m'` (270×112px), `'s'` (210×88px).
 
 See `examples/embed.html` for a full example.
 

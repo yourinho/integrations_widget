@@ -70,7 +70,7 @@
   <header class="demo-header">
     <span class="demo-label">Card size example</span>
     <h1>Albato Apps Widget</h1>
-    <p>Widget with <code>cardSize: 'm'</code> — medium cards (150×150px). Try <code>'s'</code> for small or <code>'l'</code> for large (default).</p>
+    <p>Widget with <code>cardSize: 'm'</code> and <code>detailCardSize: 'm'</code> — medium partner and trigger/action cards. Try <code>'s'</code> for small or <code>'l'</code> for large (default).</p>
   </header>
   <div class="widget-wrapper">
     <div id="albato-widget" class="widget-container"></div>
@@ -79,7 +79,8 @@
   <script>
     AlbatoWidget.initWidget({
       container: document.getElementById('albato-widget'),
-      cardSize: 'm'
+      cardSize: 'm',
+      detailCardSize: 'm'
     });
   </script>
 </body>

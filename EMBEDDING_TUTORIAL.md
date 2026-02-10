@@ -130,7 +130,8 @@ Here is a complete HTML page with the widget embedded, styled like the [demo pag
 | `regions`   | No      | Array of region IDs to filter integrations. `2` = BR (Brazil), `3` = global. Omit to show all. |
 | `font`      | No      | Custom font-family for the widget (e.g. `"Inter, sans-serif"`). Load the font on your page first. |
 | `colors`    | No      | Object with color overrides for branding: `primary`, `background`, `surface`, `text`, `textMuted`, `border`, `textOnPrimary`. |
-| `cardSize`  | No      | Partner card size: `'l'` (180px, default), `'m'` (150px), `'s'` (120px). |
+| `cardSize`      | No      | Partner card size: `'l'` (180px, default), `'m'` (150px), `'s'` (120px). |
+| `detailCardSize`| No      | Trigger/action card size: `'l'` (330×136px, default), `'m'` (270×112px), `'s'` (210×88px). |
 
 ### Example with All Options
 
@@ -237,6 +238,24 @@ Choose the size of partner cards in the gallery:
 
 ```javascript
 cardSize: 'm'
+```
+
+On mobile, cards adapt to fit the screen width regardless of this setting.
+
+---
+
+### `detailCardSize` (optional)
+
+Choose the size of trigger and action cards on the service detail page:
+
+| Value | Size | Description |
+|-------|------|-------------|
+| `'l'` | 330×136px | Large (default) |
+| `'m'` | 270×112px | Medium |
+| `'s'` | 210×88px | Small |
+
+```javascript
+detailCardSize: 'm'
 ```
 
 On mobile, cards adapt to fit the screen width regardless of this setting.
