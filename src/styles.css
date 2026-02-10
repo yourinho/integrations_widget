@@ -702,6 +702,16 @@
   color: var(--aw-color-text-muted);
 }
 
+.albato-widget[data-detail-card-size="m"] .aw-detail-section-title {
+  font-size: 17px;
+  line-height: 20px;
+}
+
+.albato-widget[data-detail-card-size="s"] .aw-detail-section-title {
+  font-size: 15px;
+  line-height: 18px;
+}
+
 /* Card gallery - rows of 3 */
 .aw-detail-gallery {
   display: flex;
