@@ -49,8 +49,9 @@ const DETAIL_LAYOUTS = ['stacked', 'columns'];
  * @param {string} [options.cardSize] - partner card size: 'l' (180px, default), 'm' (150px), 's' (120px)
  * @param {string} [options.detailCardSize] - trigger/action card size: 'l' (330×136px, default), 'm' (270×112px), 's' (210×88px)
  * @param {string} [options.detailLayout] - detail view layout: 'stacked' (blocks under each other, default), 'columns' (triggers and actions in two columns)
+ * @param {number[]} [options.partnerIds] - allowlist of partner IDs to show (for paid clients with limited set)
  */
-export function initWidget({ container, regions, font, colors, cardSize, detailCardSize, detailLayout }) {
+export function initWidget({ container, regions, font, colors, cardSize, detailCardSize, detailLayout, partnerIds }) {
   if (!container) {
     console.error('Albato Widget: container is required');
     return;
@@ -74,7 +75,8 @@ export function initWidget({ container, regions, font, colors, cardSize, detailC
       }
     });
   }
-  container._awOptions = { regions: Array.isArray(regions) ? regions : undefined, font, colors, cardSize: size, detailCardSize: detailSize, detailLayout: layout };
+  const partnerIdsList = Array.isArray(partnerIds) ? partnerIds.filter((id) => typeof id === 'number' || (typeof id === 'string' && /^\d+$/.test(id))).map(Number) : undefined;
+  container._awOptions = { regions: Array.isArray(regions) ? regions : undefined, partnerIds: partnerIdsList?.length ? partnerIdsList : undefined, font, colors, cardSize: size, detailCardSize: detailSize, detailLayout: layout };
   if (!document.getElementById('albato-widget-styles')) {
     const styleEl = document.createElement('style');
     styleEl.id = 'albato-widget-styles';
@@ -86,7 +88,7 @@ export function initWidget({ container, regions, font, colors, cardSize, detailC
       ${renderLoadingState()}
     </div>
   `;
-  mountGallery(container, { page: 1, search: '', regions: container._awOptions?.regions });
+  mountGallery(container, { page: 1, search: '', regions: container._awOptions?.regions, partnerIds: container._awOptions?.partnerIds });
 }
 
 const SEARCH_ICON = `<svg class="${CSS_PREFIX}-search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M14 14l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
@@ -123,9 +125,11 @@ function renderLoadingState(search = '') {
   `;
 }
 
-function mountGallery(container, { page = 1, search = '', accumulatedData = [], regions: regionsParam } = {}) {
+function mountGallery(container, { page = 1, search = '', accumulatedData = [], regions: regionsParam, partnerIds: partnerIdsParam } = {}) {
   const root = container.querySelector(`.${CSS_PREFIX}-root`);
   const regions = regionsParam ?? container._awOptions?.regions;
+  const partnerIds = partnerIdsParam ?? container._awOptions?.partnerIds;
+  const hasClientFilter = (Array.isArray(regions) && regions.length > 0) || (Array.isArray(partnerIds) && partnerIds.length > 0);
 
   const searchEl = root?.querySelector(`.${CSS_PREFIX}-search-input`);
   if (searchEl) searchEl.disabled = false;
@@ -141,11 +145,11 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [], 
     container._awPartnerContinuation = null;
   }
 
-  const continuation = isLoadMore && regions ? container._awPartnerContinuation : null;
+  const continuation = isLoadMore && hasClientFilter ? container._awPartnerContinuation : null;
 
-  fetchPartners(page, search, regions, continuation)
+  fetchPartners(page, search, regions, partnerIds, continuation)
     .then(({ data, meta, continuation: nextContinuation }) => {
-      if (regions && nextContinuation) {
+      if (hasClientFilter && nextContinuation) {
         container._awPartnerContinuation = nextContinuation;
       }
       const mergedData = isLoadMore ? [...accumulatedData, ...data] : data;
@@ -187,7 +191,7 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [], 
           input.addEventListener('input', (e) => {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(
-              () => mountGallery(container, { page: 1, search: e.target.value.trim(), regions }),
+              () => mountGallery(container, { page: 1, search: e.target.value.trim(), regions, partnerIds }),
               DEBOUNCE_MS
             );
           });
@@ -208,7 +212,7 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [], 
           showMoreBtn.addEventListener('click', () => {
             showMoreBtn.disabled = true;
             showMoreBtn.textContent = 'Loading...';
-            mountGallery(container, { page: page + 1, search, accumulatedData: mergedData, regions });
+            mountGallery(container, { page: page + 1, search, accumulatedData: mergedData, regions, partnerIds });
           });
         }
       }
@@ -230,13 +234,13 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [], 
       if (errInput) {
         errInput.addEventListener('input', (e) => {
           clearTimeout(searchTimeout);
-          searchTimeout = setTimeout(() => mountGallery(container, { page: 1, search: e.target.value.trim(), regions }), DEBOUNCE_MS);
+          searchTimeout = setTimeout(() => mountGallery(container, { page: 1, search: e.target.value.trim(), regions, partnerIds }), DEBOUNCE_MS);
         });
         if (searchHadFocus) {
           requestAnimationFrame(() => focusSearchInput(errInput));
         }
       }
-      root.querySelector(`.${CSS_PREFIX}-retry`).addEventListener('click', () => mountGallery(container, { page, search, regions }));
+      root.querySelector(`.${CSS_PREFIX}-retry`).addEventListener('click', () => mountGallery(container, { page, search, regions, partnerIds }));
     });
 }
 

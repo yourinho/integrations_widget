@@ -25,6 +25,12 @@ function filterByRegion(partners, regions) {
   });
 }
 
+function filterByPartnerIds(partners, partnerIds) {
+  if (!Array.isArray(partnerIds) || partnerIds.length === 0) return partners;
+  const idSet = new Set(partnerIds.map((id) => String(id)));
+  return partners.filter((p) => idSet.has(String(p.partnerId)));
+}
+
 async function fetchOnePartnersPage(apiPage, search) {
   const params = {
     'per-page': PER_PAGE_SERVICES,
@@ -48,16 +54,17 @@ async function fetchOnePartnersPage(apiPage, search) {
 }
 
 /**
- * @param {number} page - widget page (1-based), used when no regions filter
+ * @param {number} page - widget page (1-based), used when no client-side filter
  * @param {string} search
  * @param {number[]|null} [regions]
- * @param {{ leftover: Array, nextApiPage: number }|null} [continuation] - for regions filter pagination
+ * @param {number[]|null} [partnerIds] - allowlist of partner IDs to show (for paid clients)
+ * @param {{ leftover: Array, nextApiPage: number }|null} [continuation] - for client-side filter pagination
  * @returns {Promise<{data: Array, meta: {page, totalPages, totalItemsCount}, continuation?: Object}>}
  */
-export async function fetchPartners(page = 1, search = '', regions = null, continuation = null) {
-  const hasRegionFilter = Array.isArray(regions) && regions.length > 0;
+export async function fetchPartners(page = 1, search = '', regions = null, partnerIds = null, continuation = null) {
+  const hasClientFilter = (Array.isArray(regions) && regions.length > 0) || (Array.isArray(partnerIds) && partnerIds.length > 0);
 
-  if (!hasRegionFilter) {
+  if (!hasClientFilter) {
     const { data: raw, totalPages } = await fetchOnePartnersPage(page, search);
     return {
       data: raw,
@@ -70,11 +77,22 @@ export async function fetchPartners(page = 1, search = '', regions = null, conti
   let apiPage = continuation?.nextApiPage ?? 1;
   let totalApiPages = null;
 
+  const filterData = (raw) => {
+    let result = raw;
+    if (Array.isArray(regions) && regions.length > 0) {
+      result = filterByRegion(result, regions);
+    }
+    if (Array.isArray(partnerIds) && partnerIds.length > 0) {
+      result = filterByPartnerIds(result, partnerIds);
+    }
+    return result;
+  };
+
   while (accumulated.length < targetCount) {
     const { data: raw, totalPages } = await fetchOnePartnersPage(apiPage, search);
     if (totalApiPages === null) totalApiPages = totalPages;
 
-    const filtered = filterByRegion(raw, regions);
+    const filtered = filterData(raw);
     accumulated = accumulated.concat(filtered);
 
     if (apiPage >= totalApiPages) break;

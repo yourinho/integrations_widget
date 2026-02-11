@@ -133,6 +133,7 @@ Here is a complete HTML page with the widget embedded, styled like the [demo pag
 | `cardSize`      | No      | Partner card size: `'l'` (180px, default), `'m'` (150px), `'s'` (120px). |
 | `detailCardSize`| No      | Trigger/action card size: `'l'` (330×136px, default), `'m'` (270×112px), `'s'` (210×88px). |
 | `detailLayout`  | No      | Detail view layout: `'stacked'` (default), `'columns'` (triggers and actions in two columns, no tabs). |
+| `partnerIds`    | No      | Allowlist of partner IDs to show (e.g. `[5, 10, 15]`). For paid clients with a limited set. |
 
 ### Example with All Options
 
@@ -280,6 +281,18 @@ On screens under 900px, columns stack vertically.
 
 ---
 
+### `partnerIds` (optional)
+
+For paid clients who have access only to a limited set of integrations, pass an array of partner IDs. Only those partners will be displayed:
+
+```javascript
+partnerIds: [5, 10, 15, 20]
+```
+
+You can combine `partnerIds` with `regions` — the widget will show partners that match both filters. Pass numeric IDs; string IDs like `"10"` are also accepted.
+
+---
+
 ## Live Examples
 
 - **Basic embed:** [https://yourinho.github.io/integrations_widget/](https://yourinho.github.io/integrations_widget/)
@@ -344,7 +357,7 @@ Customize the fallback content in `onerror` to match your site (link, message, o
 |-------|----------|
 | Widget does not appear | Ensure the script loads after the container exists. Check the browser console for errors. |
 | Script fails to load | Use the [Resilient embed](#resilient-embed-handling-script-load-failure) pattern with fallback content. |
-| Wrong integrations shown | Verify the `regions` option if you use it. Use only numeric IDs, e.g. `[2, 3]`. |
+| Wrong integrations shown | Verify the `regions` or `partnerIds` option if you use them. Use numeric IDs, e.g. `[2, 3]` or `[5, 10, 15]`. |
 | Font looks different | Load your font (e.g. from Google Fonts) before the widget script, and pass the `font` option. |
 
 ---
