@@ -25,6 +25,18 @@
   width: 100%;
 }
 
+.albato-widget[data-align="left"] .aw-root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.albato-widget[data-align="right"] .aw-root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
 /* Apps gallery - main container */
 .aw-gallery-wrap {
   display: flex;
