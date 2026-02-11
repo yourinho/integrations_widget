@@ -142,10 +142,17 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [], 
     if (hadSearchFocus) {
       requestAnimationFrame(() => focusSearchInput(root.querySelector(`.${CSS_PREFIX}-search-input`)));
     }
-    container._awPartnerContinuation = null;
+    if (!partnerIds?.length) container._awPartnerContinuation = null;
   }
 
-  const continuation = isLoadMore && hasClientFilter ? container._awPartnerContinuation : null;
+  const hasPartnerIdsFilter = Array.isArray(partnerIds) && partnerIds.length > 0;
+  let continuation = null;
+  if (hasPartnerIdsFilter) {
+    if (!container._awPartnersByIdsCache) container._awPartnersByIdsCache = { all: null };
+    continuation = { cache: container._awPartnersByIdsCache };
+  } else if (isLoadMore && hasClientFilter) {
+    continuation = container._awPartnerContinuation;
+  }
 
   fetchPartners(page, search, regions, partnerIds, continuation)
     .then(({ data, meta, continuation: nextContinuation }) => {
