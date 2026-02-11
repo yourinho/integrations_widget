@@ -143,10 +143,14 @@ Here is a complete HTML page with the widget embedded, styled like the [demo pag
 <script>
   AlbatoWidget.initWidget({
     container: document.getElementById('albato-widget'),
-    regions: [2, 3],
-    font: "'Open Sans', sans-serif",
+    regions: [2, 3],                          // optional
+    font: "'Open Sans', sans-serif",          // optional
     colors: { primary: '#1a56db', textMuted: '#6b7280' },
-    cardSize: 'm'
+    cardSize: 'm',                            // optional: 'l' | 'm' | 's'
+    detailCardSize: 'm',                      // optional: 'l' | 'm' | 's'
+    detailLayout: 'columns',                  // optional: 'stacked' | 'columns'
+    partnerIds: [5, 10, 15],                 // optional: allowlist
+    align: 'left'                             // optional: 'center' | 'left' | 'right'
   });
 </script>
 ```
@@ -272,7 +276,7 @@ Choose how triggers and actions are displayed on the service detail page:
 | Value | Description |
 |-------|-------------|
 | `'stacked'` | Blocks one under another, with tabs (Triggers&Actions, Triggers, Actions). Default. |
-| `'columns'` | Two columns side by side: triggers on the left, actions on the right. Tab bar is hidden, both sections always visible. Columns are centered. |
+| `'columns'` | Two columns side by side: triggers on the left, actions on the right. Tab bar is hidden, both sections always visible. Use `align` to position columns (left/center/right). |
 
 ```javascript
 detailLayout: 'columns'
@@ -313,7 +317,7 @@ align: 'left'
 ## Live Examples
 
 - **Basic embed:** [https://yourinho.github.io/integrations_widget/](https://yourinho.github.io/integrations_widget/)
-- Additional examples are available in the `examples/` folder of this repository.
+- **Examples** in the `examples/` folder: `embed.html`, `embed-regions-filter.html`, `embed-dark-theme.html`, `embed-card-size.html`, `embed-detail-columns.html`, `embed-partner-ids.html`, `embed-align-left.html`.
 
 ---
 
