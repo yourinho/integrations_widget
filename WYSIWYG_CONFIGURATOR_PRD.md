@@ -1,5 +1,24 @@
 # PRD: Albato Apps Widget — WYSIWYG Configurator
 
+## Table of Contents
+
+- [1. Overview](#1-overview)
+- [2. Goals & Success Criteria](#2-goals--success-criteria)
+- [3. Scope](#3-scope)
+- [4. Architecture](#4-architecture)
+- [5. Layout & UI Structure](#5-layout--ui-structure)
+- [6. Functional Requirements](#6-functional-requirements)
+  - [6.1 Превью виджета](#61-превью-виджета)
+  - [6.2 Панель настроек](#62-панель-настроек)
+  - [6.3 Кнопка «Получить код встраивания»](#63-кнопка-получить-код-встраивания)
+- [7. Non-Functional Requirements](#7-non-functional-requirements)
+- [8. Technical Decisions](#8-technical-decisions)
+- [9. UI Copy](#9-ui-copy)
+- [10. Future Considerations (Out of Scope v1)](#10-future-considerations-out-of-scope-v1)
+- [11. References](#11-references)
+
+---
+
 ## 1. Overview
 
 **WYSIWYG Configurator** — веб-приложение для конечных клиентов Albato Embedded, позволяющее в визуальном режиме настроить виджет интеграций и сразу получить код для встраивания на свой лендинг.

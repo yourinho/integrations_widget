@@ -1,0 +1,14 @@
+---
+description: Add table of contents to all markdown documents
+globs: "**/*.md"
+alwaysApply: false
+---
+
+# Markdown Documents — Table of Contents
+
+**Всегда добавляй оглавление (Table of Contents) во все markdown-документы.**
+
+- Для новых документов — создавай оглавление сразу после заголовка документа
+- Для существующих — добавляй оглавление, если его нет
+- Используй ссылки на якоря в формате `#section-name` (GitHub: lowercase, пробелы → дефисы)
+- Включай основные разделы (##) и важные подразделы (###)

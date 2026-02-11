@@ -1,5 +1,32 @@
 # PRD: Albato Apps Widget (for Embedded clients)
 
+## Table of Contents
+
+- [1. Overview](#1-overview)
+- [2. Goals & Success Criteria](#2-goals--success-criteria)
+- [3. Scope](#3-scope)
+- [4. User Flow](#4-user-flow)
+- [5. Functional Requirements](#5-functional-requirements)
+  - [5.1 Services Gallery](#51-services-gallery)
+  - [5.2 Service Details Page](#52-service-details-page)
+- [6. API Integration](#6-api-integration)
+  - [6.1 Services List API](#61-services-list-api)
+  - [6.2 Triggers & Actions API](#62-triggers--actions-api)
+- [7. Non-Functional Requirements](#7-non-functional-requirements)
+- [8. Edge Cases](#8-edge-cases)
+- [9. Embedding](#9-embedding)
+  - [9.1 Technical Decisions](#91-technical-decisions)
+  - [9.2 Navigation](#92-navigation)
+- [10. UI States](#10-ui-states)
+  - [10.1 Global Widget States](#101-global-widget-states)
+  - [10.2 Services Gallery States](#102-services-gallery-states)
+  - [10.3 Service Details Page States](#103-service-details-page-states)
+  - [10.4 Pagination States](#104-pagination-states)
+  - [10.5 Network & Data States](#105-network--data-states)
+- [11. UI Copy](#11-ui-copy)
+
+---
+
 ## 1. Overview
 
 **Albato Apps Widget** — встраиваемый виджет для клиентов Albato Embedded, предназначенный для размещения на лендингах клиентов.

@@ -2,6 +2,23 @@
 
 Planned features for the Albato Apps Widget.
 
+## Table of Contents
+
+- [1. Hide/show headers in views](#1-hideshow-headers-in-views)
+- [2. Font size](#2-font-size)
+- [3. Try button — show/hide and custom link](#3-try-button--showhide-and-custom-link)
+- [4. Partners per page](#4-partners-per-page)
+- [5. Widget background color](#5-widget-background-color)
+- [6. Card corner radius](#6-card-corner-radius)
+- [7. Contract ID filter (API)](#7-contract-id-filter-api)
+- [8. Custom stylesheet (CSS)](#8-custom-stylesheet-css)
+- [9. Container dimensions (min/max width/height)](#9-container-dimensions-minmax-widthheight)
+- [10. Hide/show sections: search, Show more, pagination](#10-hideshow-sections-search-show-more-pagination)
+- [11. Dark / light theme](#11-dark--light-theme)
+- [12. Localization — language and custom texts](#12-localization--language-and-custom-texts)
+- [13. Callbacks / events on card click](#13-callbacks--events-on-card-click)
+- [14. Cards per row (2–4)](#14-cards-per-row-24)
+
 ---
 
 ## Script parameters for customization

@@ -2,6 +2,15 @@
 
 Embeddable widget for Albato Embedded clients — shows integrations gallery on landing pages.
 
+## Table of Contents
+
+- [Development](#development)
+- [Build](#build)
+- [Embedding](#embedding)
+- [Размещение на GitHub](#размещение-на-github)
+
+---
+
 ## Development
 
 ```bash
