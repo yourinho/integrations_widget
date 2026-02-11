@@ -134,6 +134,7 @@ Here is a complete HTML page with the widget embedded, styled like the [demo pag
 | `detailCardSize`| No      | Trigger/action card size: `'l'` (330×136px, default), `'m'` (270×112px), `'s'` (210×88px). |
 | `detailLayout`  | No      | Detail view layout: `'stacked'` (default), `'columns'` (triggers and actions in two columns, no tabs). |
 | `partnerIds`    | No      | Allowlist of partner IDs to show (e.g. `[5, 10, 15]`). For paid clients with a limited set. |
+| `align`         | No      | Content alignment: `'center'` (default), `'left'`, `'right'`. |
 
 ### Example with All Options
 
@@ -290,6 +291,22 @@ partnerIds: [5, 10, 15, 20]
 ```
 
 You can combine `partnerIds` with `regions` — the widget will show partners that match both filters. Pass numeric IDs; string IDs like `"10"` are also accepted.
+
+---
+
+### `align` (optional)
+
+Choose content alignment for the gallery and detail view:
+
+| Value | Description |
+|-------|-------------|
+| `'center'` | Centered (default) |
+| `'left'` | Left-aligned |
+| `'right'` | Right-aligned |
+
+```javascript
+align: 'left'
+```
 
 ---
 

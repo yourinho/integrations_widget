@@ -38,6 +38,7 @@ function getDescription(obj) {
 const COLOR_KEYS = ['primary', 'background', 'surface', 'text', 'textMuted', 'border', 'textOnPrimary'];
 const CARD_SIZES = ['s', 'm', 'l'];
 const DETAIL_LAYOUTS = ['stacked', 'columns'];
+const ALIGN_OPTIONS = ['left', 'center', 'right'];
 
 /**
  * Initialize and mount the widget
@@ -50,8 +51,9 @@ const DETAIL_LAYOUTS = ['stacked', 'columns'];
  * @param {string} [options.detailCardSize] - trigger/action card size: 'l' (330×136px, default), 'm' (270×112px), 's' (210×88px)
  * @param {string} [options.detailLayout] - detail view layout: 'stacked' (blocks under each other, default), 'columns' (triggers and actions in two columns)
  * @param {number[]} [options.partnerIds] - allowlist of partner IDs to show (for paid clients with limited set)
+ * @param {string} [options.align] - content alignment: 'center' (default), 'left', 'right'
  */
-export function initWidget({ container, regions, font, colors, cardSize, detailCardSize, detailLayout, partnerIds }) {
+export function initWidget({ container, regions, font, colors, cardSize, detailCardSize, detailLayout, partnerIds, align }) {
   if (!container) {
     console.error('Albato Widget: container is required');
     return;
@@ -63,6 +65,8 @@ export function initWidget({ container, regions, font, colors, cardSize, detailC
   container.setAttribute('data-detail-card-size', detailSize);
   const layout = typeof detailLayout === 'string' && DETAIL_LAYOUTS.includes(detailLayout.toLowerCase()) ? detailLayout.toLowerCase() : 'stacked';
   container.setAttribute('data-detail-layout', layout);
+  const alignVal = typeof align === 'string' && ALIGN_OPTIONS.includes(align.toLowerCase()) ? align.toLowerCase() : 'center';
+  container.setAttribute('data-align', alignVal);
   if (font) {
     container.style.fontFamily = font;
   }
@@ -76,7 +80,7 @@ export function initWidget({ container, regions, font, colors, cardSize, detailC
     });
   }
   const partnerIdsList = Array.isArray(partnerIds) ? partnerIds.filter((id) => typeof id === 'number' || (typeof id === 'string' && /^\d+$/.test(id))).map(Number) : undefined;
-  container._awOptions = { regions: Array.isArray(regions) ? regions : undefined, partnerIds: partnerIdsList?.length ? partnerIdsList : undefined, font, colors, cardSize: size, detailCardSize: detailSize, detailLayout: layout };
+  container._awOptions = { regions: Array.isArray(regions) ? regions : undefined, partnerIds: partnerIdsList?.length ? partnerIdsList : undefined, font, colors, cardSize: size, detailCardSize: detailSize, detailLayout: layout, align: alignVal };
   if (!document.getElementById('albato-widget-styles')) {
     const styleEl = document.createElement('style');
     styleEl.id = 'albato-widget-styles';

@@ -43,6 +43,7 @@ Output: `dist/albato-widget.iife.js`
 - `detailCardSize` (optional) — trigger/action card size: `'l'` (330×136px, default), `'m'` (270×112px), `'s'` (210×88px).
 - `detailLayout` (optional) — detail view layout: `'stacked'` (blocks under each other, default), `'columns'` (triggers and actions in two columns, no tabs).
 - `partnerIds` (optional) — allowlist of partner IDs to show (e.g. `[5, 10, 15]`). For paid clients with a limited set of integrations.
+- `align` (optional) — content alignment: `'center'` (default), `'left'`, `'right'`.
 
 See `examples/embed.html` for a full example.
 

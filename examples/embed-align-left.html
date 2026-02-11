@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Albato Widget — Partner IDs Example</title>
+  <title>Albato Widget — Align Left Example</title>
   <style>
     * { box-sizing: border-box; }
     body {
@@ -68,9 +68,9 @@
 </head>
 <body>
   <header class="demo-header">
-    <span class="demo-label">Partner IDs example</span>
+    <span class="demo-label">Align left example</span>
     <h1>Albato Apps Widget</h1>
-    <p>Widget with <code>partnerIds: [2, 3, 5, 7]</code> — only these partner IDs are displayed. For paid clients with a limited set of integrations.</p>
+    <p>Widget with <code>align: 'left'</code> — content is aligned to the left edge.</p>
   </header>
   <div class="widget-wrapper">
     <div id="albato-widget" class="widget-container"></div>
@@ -79,9 +79,6 @@
   <script>
     AlbatoWidget.initWidget({
       container: document.getElementById('albato-widget'),
-      partnerIds: [2, 3, 5, 7, 10055, 11406],
-      cardSize: 'm',
-      detailCardSize: 'm',
       align: 'left'
     });
   </script>
