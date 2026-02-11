@@ -2,6 +2,27 @@
 
 This guide explains how to embed the Albato Apps Widget on your website. The widget displays a gallery of integrations and allows visitors to browse available services, triggers, and actions.
 
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [Full Example Page](#full-example-page)
+- [Configuration Options](#configuration-options)
+- [Option Details](#option-details)
+  - [container](#container-required)
+  - [regions](#regions-optional)
+  - [font](#font-optional)
+  - [colors](#colors-optional)
+  - [cardSize](#cardsize-optional)
+  - [detailCardSize](#detailcardsize-optional)
+  - [detailLayout](#detaillayout-optional)
+  - [partnerIds](#partnerids-optional)
+  - [align](#align-optional)
+- [Live Examples](#live-examples)
+- [Styling Tips](#styling-tips)
+- [Resilient embed](#resilient-embed-handling-script-load-failure)
+- [Troubleshooting](#troubleshooting)
+- [Script URL](#script-url)
+
 ---
 
 ## Quick Start
