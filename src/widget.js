@@ -171,7 +171,7 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [], 
                 <div class="${CSS_PREFIX}-card" data-partner-id="${p.partnerId}">
                   <div class="${CSS_PREFIX}-card-inner">
                     <img src="${(p.logo && p.logo['100x100']) || ''}" alt="" class="${CSS_PREFIX}-card-logo" onerror="this.style.display='none'" />
-                    <span class="${CSS_PREFIX}-card-title">${escapeHtml(p.title || '')}</span>
+                    <span class="${CSS_PREFIX}-card-title" title="${escapeHtml(p.title || '')}">${escapeHtml(p.title || '')}</span>
                   </div>
                 </div>
               `).join('')}
