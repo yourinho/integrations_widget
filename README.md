@@ -47,7 +47,7 @@ Output: `dist/albato-widget.iife.js`
 - `container` (required) — DOM element to mount the widget
 - `regions` (optional) — array of region IDs to filter partners (e.g. `[2, 3]`). Omit to show all.
 - `font` (optional) — font-family string (e.g. `"Inter, sans-serif"` or `"'Open Sans', sans-serif"`). Load the font on your page first (e.g. via Google Fonts).
-- `colors` (optional) — object with color overrides: `primary`, `background`, `surface`, `text`, `textMuted`, `border`, `textOnPrimary`. Pass only the keys you want to override.
+- `colors` (optional) — object with color overrides: `primary`, `background`, `surface`, `text`, `textMuted`, `border`, `textOnPrimary`, `cardBackground`, `detailCardBackground`. Pass only the keys you want to override.
 - `cardSize` (optional) — partner card size: `'l'` (180px, default), `'m'` (150px), `'s'` (120px).
 - `detailCardSize` (optional) — trigger/action card size: `'l'` (330×136px, default), `'m'` (270×112px), `'s'` (210×88px).
 - `detailLayout` (optional) — detail view layout: `'stacked'` (blocks under each other, default), `'columns'` (triggers and actions in two columns, no tabs).

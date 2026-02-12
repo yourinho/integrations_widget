@@ -10,6 +10,8 @@
   --aw-color-text-muted: #A0A4B1;
   --aw-color-border: #E6E8EC;
   --aw-color-text-on-primary: #FFFFFF;
+  --aw-color-card-background: var(--aw-color-background);
+  --aw-color-detail-card-background: var(--aw-color-background);
   --aw-card-radius: 16px;
   --aw-detail-card-radius: 16px;
 
@@ -187,7 +189,7 @@
   gap: 10px;
   width: 180px;
   height: 180px;
-  background: var(--aw-color-background);
+  background: var(--aw-color-card-background);
   border: 1px solid var(--aw-color-border);
   border-radius: var(--aw-card-radius);
   cursor: pointer;
@@ -841,7 +843,7 @@
   align-items: stretch;
   width: 330px;
   height: 136px;
-  background: var(--aw-color-background);
+  background: var(--aw-color-detail-card-background);
   border: 1px solid var(--aw-color-border);
   border-radius: var(--aw-detail-card-radius);
   flex: none;

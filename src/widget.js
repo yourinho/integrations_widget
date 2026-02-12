@@ -35,7 +35,7 @@ function getDescription(obj) {
   return obj.description || obj.descriptionEn || '';
 }
 
-const COLOR_KEYS = ['primary', 'background', 'surface', 'text', 'textMuted', 'border', 'textOnPrimary'];
+const COLOR_KEYS = ['primary', 'background', 'surface', 'text', 'textMuted', 'border', 'textOnPrimary', 'cardBackground', 'detailCardBackground'];
 const CARD_SIZES = ['s', 'm', 'l'];
 const DETAIL_LAYOUTS = ['stacked', 'columns'];
 const ALIGN_OPTIONS = ['left', 'center', 'right'];
@@ -46,7 +46,7 @@ const ALIGN_OPTIONS = ['left', 'center', 'right'];
  * @param {HTMLElement} options.container - DOM element to mount the widget into
  * @param {number[]} [options.regions] - filter partners by region (e.g. [2, 3]). Omit to show all.
  * @param {string} [options.font] - font-family for the widget (e.g. "Inter, sans-serif" or "'Open Sans', sans-serif")
- * @param {Object} [options.colors] - optional color overrides: primary, background, surface, text, textMuted, border, textOnPrimary
+ * @param {Object} [options.colors] - optional color overrides: primary, background, surface, text, textMuted, border, textOnPrimary, cardBackground, detailCardBackground
  * @param {string} [options.cardSize] - partner card size: 'l' (180px, default), 'm' (150px), 's' (120px)
  * @param {string} [options.detailCardSize] - trigger/action card size: 'l' (330×136px, default), 'm' (270×112px), 's' (210×88px)
  * @param {string} [options.detailLayout] - detail view layout: 'stacked' (blocks under each other, default), 'columns' (triggers and actions in two columns)

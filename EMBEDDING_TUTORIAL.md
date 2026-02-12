@@ -243,12 +243,14 @@ To match the widget’s colors to your brand, pass an object with one or more of
 | Key | Role | Default |
 |-----|------|---------|
 | `primary` | Active tab, hover states, accents | `#2C3534` |
-| `background` | Cards, panels, inputs | `#FFFFFF` |
+| `background` | Panels, inputs; fallback for card backgrounds | `#FFFFFF` |
 | `surface` | Card footers, hover areas | `#F4F5F6` |
 | `text` | Main text | `#2C3534` |
 | `textMuted` | Secondary text, placeholders | `#A0A4B1` |
 | `border` | Borders, dividers | `#E6E8EC` |
 | `textOnPrimary` | Text on primary background | `#FFFFFF` |
+| `cardBackground` | Partner card background in gallery | Same as `background` |
+| `detailCardBackground` | Trigger/action card background on detail page | Same as `background` |
 
 You can override only the colors you need:
 
@@ -368,7 +370,7 @@ Default: `"16px"`.
 ## Live Examples
 
 - **Basic embed:** [https://yourinho.github.io/integrations_widget/](https://yourinho.github.io/integrations_widget/)
-- **Examples** in the `examples/` folder: `embed.html`, `embed-regions-filter.html`, `embed-dark-theme.html`, `embed-card-size.html`, `embed-card-radius.html`, `embed-detail-columns.html`, `embed-partner-ids.html`, `embed-align-left.html`.
+- **Examples** in the `examples/` folder: `embed.html`, `embed-regions-filter.html`, `embed-dark-theme.html`, `embed-card-size.html`, `embed-card-radius.html`, `embed-card-background.html`, `embed-detail-columns.html`, `embed-partner-ids.html`, `embed-align-left.html`.
 
 ---
 

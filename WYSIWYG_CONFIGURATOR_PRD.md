@@ -93,7 +93,7 @@
 │  ─────────────────                   │  • widget script URL       │
 │  [Desktop | Mobile] toggle            │  • regions                │
 │                                      │  • font                   │
-│  ┌────────────────────────────────┐  │  • colors (7 keys)       │
+│  ┌────────────────────────────────┐  │  • colors (9 keys)       │
 │  │                                │  │  • cardSize               │
 │  │   Widget iframe / container    │  │  • detailCardSize         │
 │  │   (demo page simulation)       │  │  • detailLayout           │
@@ -169,6 +169,8 @@
 | `textMuted`    | `#A0A4B1` | Вторичный текст |
 | `border`       | `#E6E8EC` | Границы |
 | `textOnPrimary`| `#FFFFFF` | Текст на primary-фоне |
+| `cardBackground` | = background | Фон карточки партнёра в галерее |
+| `detailCardBackground` | = background | Фон карточки триггера/экшена |
 
 - Поля для цветов: color picker + возможность ввода hex вручную
 - Можно добавить кнопку «Сбросить к дефолтам» для всей секции colors
