@@ -1,7 +1,7 @@
 /* Albato Widget - namespaced styles (Figma spec) */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-/* Customizable via initWidget({ colors: { ... } }) */
+/* Customizable via initWidget({ colors: { ... }, cardRadius, detailCardRadius }) */
 .albato-widget {
   --aw-color-primary: #2C3534;
   --aw-color-background: #FFFFFF;
@@ -10,6 +10,8 @@
   --aw-color-text-muted: #A0A4B1;
   --aw-color-border: #E6E8EC;
   --aw-color-text-on-primary: #FFFFFF;
+  --aw-card-radius: 16px;
+  --aw-detail-card-radius: 16px;
 
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-size: 14px;
@@ -187,7 +189,7 @@
   height: 180px;
   background: var(--aw-color-background);
   border: 1px solid var(--aw-color-border);
-  border-radius: 16px;
+  border-radius: var(--aw-card-radius);
   cursor: pointer;
   transition: border-color 0.2s, box-shadow 0.2s;
   flex: none;
@@ -841,7 +843,7 @@
   height: 136px;
   background: var(--aw-color-background);
   border: 1px solid var(--aw-color-border);
-  border-radius: 16px;
+  border-radius: var(--aw-detail-card-radius);
   flex: none;
   overflow: hidden;
 }
@@ -974,7 +976,7 @@
   flex: 0 0 40px;
   min-height: 40px;
   background: var(--aw-color-surface);
-  border-radius: 0 0 16px 16px;
+  border-radius: 0 0 var(--aw-detail-card-radius) var(--aw-detail-card-radius);
 }
 
 .albato-widget[data-detail-card-size="m"] .aw-detail-card-footer {

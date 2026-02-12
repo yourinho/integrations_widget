@@ -52,8 +52,10 @@ const ALIGN_OPTIONS = ['left', 'center', 'right'];
  * @param {string} [options.detailLayout] - detail view layout: 'stacked' (blocks under each other, default), 'columns' (triggers and actions in two columns)
  * @param {number[]} [options.partnerIds] - allowlist of partner IDs to show (for paid clients with limited set)
  * @param {string} [options.align] - content alignment: 'center' (default), 'left', 'right'
+ * @param {string} [options.cardRadius] - border radius for partner cards (e.g. "16px", "8px", "0"). Default: "16px"
+ * @param {string} [options.detailCardRadius] - border radius for trigger/action cards (e.g. "16px", "8px", "0"). Default: "16px"
  */
-export function initWidget({ container, regions, font, colors, cardSize, detailCardSize, detailLayout, partnerIds, align }) {
+export function initWidget({ container, regions, font, colors, cardSize, detailCardSize, detailLayout, partnerIds, align, cardRadius, detailCardRadius }) {
   if (!container) {
     console.error('Albato Widget: container is required');
     return;
@@ -78,6 +80,12 @@ export function initWidget({ container, regions, font, colors, cardSize, detailC
         container.style.setProperty(varName, value.trim());
       }
     });
+  }
+  if (typeof cardRadius === 'string' && cardRadius.trim()) {
+    container.style.setProperty('--aw-card-radius', cardRadius.trim());
+  }
+  if (typeof detailCardRadius === 'string' && detailCardRadius.trim()) {
+    container.style.setProperty('--aw-detail-card-radius', detailCardRadius.trim());
   }
   const partnerIdsList = Array.isArray(partnerIds) ? partnerIds.filter((id) => typeof id === 'number' || (typeof id === 'string' && /^\d+$/.test(id))).map(Number) : undefined;
   container._awOptions = { regions: Array.isArray(regions) ? regions : undefined, partnerIds: partnerIdsList?.length ? partnerIdsList : undefined, font, colors, cardSize: size, detailCardSize: detailSize, detailLayout: layout, align: alignVal };

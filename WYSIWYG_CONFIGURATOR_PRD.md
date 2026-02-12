@@ -99,6 +99,8 @@
 │  │   (demo page simulation)       │  │  • detailLayout           │
 │  │                                │  │  • partnerIds             │
 │  │                                │  │  • align                   │
+│  │  • cardRadius             │
+│  │  • detailCardRadius       │
 │  └────────────────────────────────┘  │                          │
 │                                      │  ─────────────────────   │
 │                                      │  [Get Embed Code] btn     │
@@ -153,6 +155,8 @@
 | `detailLayout`  | `string`  | Select: `stacked` \| `columns` | `stacked` |
 | `partnerIds`   | `number[]`| Текстовое поле (список через запятую) | `[]` (пусто). Пример: `5, 10, 15` |
 | `align`        | `string`  | Select: `center` \| `left` \| `right` | `center` |
+| `cardRadius`   | `string`  | Текстовое поле (CSS value) | `"16px"` (дефолт). Пример: `"12px"`, `"8px"`, `"0"` |
+| `detailCardRadius` | `string` | Текстовое поле (CSS value) | `"16px"` (дефолт). Пример: `"12px"`, `"8px"`, `"0"` |
 
 **Colors (ключи и дефолты):**
 

@@ -53,6 +53,8 @@ Output: `dist/albato-widget.iife.js`
 - `detailLayout` (optional) — detail view layout: `'stacked'` (blocks under each other, default), `'columns'` (triggers and actions in two columns, no tabs).
 - `partnerIds` (optional) — allowlist of partner IDs to show (e.g. `[5, 10, 15]`). For paid clients with a limited set of integrations.
 - `align` (optional) — content alignment: `'center'` (default), `'left'`, `'right'`.
+- `cardRadius` (optional) — border radius for partner cards (e.g. `"16px"`, `"8px"`, `"0"`). Default: `"16px"`.
+- `detailCardRadius` (optional) — border radius for trigger/action cards (e.g. `"16px"`, `"8px"`, `"0"`). Default: `"16px"`.
 
 See `examples/embed.html` for a full example.
 

@@ -1,0 +1,8 @@
+---
+description: Suggest commit message after code changes
+alwaysApply: true
+---
+
+# Commit Message
+
+**После всех изменений в коде** — предлагай пользователю commit message для коммита сделанных изменений.

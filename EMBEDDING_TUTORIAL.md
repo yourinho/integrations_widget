@@ -17,6 +17,8 @@ This guide explains how to embed the Albato Apps Widget on your website. The wid
   - [detailLayout](#detaillayout-optional)
   - [partnerIds](#partnerids-optional)
   - [align](#align-optional)
+  - [cardRadius](#cardradius-optional)
+  - [detailCardRadius](#detailcardradius-optional)
 - [Live Examples](#live-examples)
 - [Styling Tips](#styling-tips)
 - [Resilient embed](#resilient-embed-handling-script-load-failure)
@@ -156,6 +158,8 @@ Here is a complete HTML page with the widget embedded, styled like the [demo pag
 | `detailLayout`  | No      | Detail view layout: `'stacked'` (default), `'columns'` (triggers and actions in two columns, no tabs). |
 | `partnerIds`    | No      | Allowlist of partner IDs to show (e.g. `[5, 10, 15]`). For paid clients with a limited set. |
 | `align`         | No      | Content alignment: `'center'` (default), `'left'`, `'right'`. |
+| `cardRadius`    | No      | Border radius for partner cards (e.g. `"16px"`, `"8px"`, `"0"`). Default: `"16px"`. |
+| `detailCardRadius` | No    | Border radius for trigger/action cards (e.g. `"16px"`, `"8px"`, `"0"`). Default: `"16px"`. |
 
 ### Example with All Options
 
@@ -171,7 +175,9 @@ Here is a complete HTML page with the widget embedded, styled like the [demo pag
     detailCardSize: 'm',                      // optional: 'l' | 'm' | 's'
     detailLayout: 'columns',                  // optional: 'stacked' | 'columns'
     partnerIds: [5, 10, 15],                 // optional: allowlist
-    align: 'left'                             // optional: 'center' | 'left' | 'right'
+    align: 'left',                            // optional: 'center' | 'left' | 'right'
+    cardRadius: '12px',                       // optional: partner card radius
+    detailCardRadius: '8px'                   // optional: trigger/action card radius
   });
 </script>
 ```
@@ -335,10 +341,34 @@ align: 'left'
 
 ---
 
+### `cardRadius` (optional)
+
+Border radius for partner cards in the gallery. Pass a CSS value (e.g. `"16px"`, `"8px"`, `"0"`):
+
+```javascript
+cardRadius: '12px'
+```
+
+Default: `"16px"`.
+
+---
+
+### `detailCardRadius` (optional)
+
+Border radius for trigger and action cards on the service detail page:
+
+```javascript
+detailCardRadius: '8px'
+```
+
+Default: `"16px"`.
+
+---
+
 ## Live Examples
 
 - **Basic embed:** [https://yourinho.github.io/integrations_widget/](https://yourinho.github.io/integrations_widget/)
-- **Examples** in the `examples/` folder: `embed.html`, `embed-regions-filter.html`, `embed-dark-theme.html`, `embed-card-size.html`, `embed-detail-columns.html`, `embed-partner-ids.html`, `embed-align-left.html`.
+- **Examples** in the `examples/` folder: `embed.html`, `embed-regions-filter.html`, `embed-dark-theme.html`, `embed-card-size.html`, `embed-card-radius.html`, `embed-detail-columns.html`, `embed-partner-ids.html`, `embed-align-left.html`.
 
 ---
 
