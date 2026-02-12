@@ -19,9 +19,11 @@ function buildUrl(path, params = {}) {
 
 function filterByRegion(partners, regions) {
   if (!Array.isArray(regions) || regions.length === 0) return partners;
+  const regionSet = new Set(regions.map((r) => Number(r)).filter((n) => !Number.isNaN(n)));
+  if (regionSet.size === 0) return partners;
   return partners.filter((p) => {
-    const partnerRegions = Array.isArray(p.region) ? p.region : (p.region != null ? [p.region] : []);
-    return partnerRegions.some((r) => regions.includes(r));
+    const partnerRegions = Array.isArray(p.region) ? p.region : p.region != null ? [p.region] : [];
+    return partnerRegions.some((r) => regionSet.has(Number(r)));
   });
 }
 
