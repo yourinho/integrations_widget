@@ -33,6 +33,7 @@
 | `typography.sectionTitleSize` | «Triggers», «Actions» | Section titles | `20px` | Input (текст), placeholder: `20px` | Размер заголовков секций «Triggers» и «Actions» над списком карточек. | Size of "Triggers" and "Actions" section headings. |
 | `typography.detailCardNameSize` | Название триггера/экшена | Trigger/action card name | `17px` | Input (текст), placeholder: `17px` | Размер названия триггера или экшена в карточке на странице детали. | Size of trigger/action name in the detail card. |
 | `typography.detailCardTypeSize` | Trigger/Action в футере карточки | Trigger/action card type label | `17px` | Input (текст), placeholder: `17px` | Размер подписи «Trigger» или «Action» в нижней части карточки. | Size of "Trigger"/"Action" label in card footer. |
+| `typography.detailCardTypeWeight` | | Trigger/action card type label | `600` | Select: 400, 500, 600, 700 | Жирность подписи «Trigger» или «Action» в футере карточки. | Font weight of "Trigger"/"Action" label in card footer. |
 | `typography.showMoreSize` | Кнопка «Show more» | Show more button | `17px` | Input (текст), placeholder: `17px` | Размер текста кнопки подгрузки следующих карточек. | Font size of the load-more button. |
 | `typography.backSize` | Кнопка «Back» | Back button | `17px` | Input (текст), placeholder: `17px` | Размер текста кнопки «Back» на странице детали. | Font size of the back button. |
 
@@ -52,7 +53,8 @@
 | `showDetailTabs` | Вкладки Triggers/Actions | Tabs | `true` | Checkbox | Работает при layout stacked.<br>Скрывает переключатель вкладок — обе секции отображаются сразу. | For stacked layout. Hides tab bar — both sections shown at once. |
 | `showSectionTitles` | «Triggers», «Actions» | Section titles | `true` | Checkbox | Скрыть заголовки секций над списками триггеров и экшенов. | Hide "Triggers" and "Actions" section headings. |
 | `showCardLogos` | Логотипы в карточках | Partner card logos | `true` | Checkbox | Показывать или скрывать логотипы сервисов в галерее.<br>При скрытии — только названия. | Show or hide service logos in the gallery. |
-| `showDetailCardType` | Trigger/Action в карточке | Trigger/action type label | `true` | Checkbox | Скрыть подпись «Trigger» или «Action» в футере карточки на странице детали. | Hide "Trigger"/"Action" label in detail card footer. |
+| `showDetailCardType` | Trigger/Action в карточке | Trigger/action type label | `true` | Checkbox | Скрыть подпись «Trigger» или «Action» в футере карточки (полоса остаётся). | Hide "Trigger"/"Action" label in detail card footer (bar stays visible). |
+| `showDetailCardFooter` | Футер карточки триггера/экшена | Detail card footer | `true` | Checkbox | Скрыть весь футер (полосу с подписью Trigger/Action) в карточке на странице детали. | Hide the entire footer bar in trigger/action cards. |
 
 ---
 
@@ -97,6 +99,7 @@
 | `tabActiveBackground` | Фон активной вкладки | Active tab background | Color picker + hex input | Фон выбранной вкладки.<br>Обычно primary. | Background of the active tab. Usually primary. |
 | `tabBorderColor` | Граница вкладок | Tab border | Color picker + hex input | Цвет рамки вкладок. | Border color of the tabs. |
 | `detailCardFooterBackground` | Фон футера карточки | Detail card footer background | Color picker + hex input | Фон нижней полосы карточки триггера/экшена (подпись Trigger/Action).<br>По умолчанию surface. | Background of the trigger/action card footer. Defaults to surface. |
+| `detailCardFooterLabelColor` | Цвет текста в футере | Detail card footer label color | Color picker + hex input | Цвет подписи «Trigger» или «Action» в футере карточки.<br>По умолчанию textMuted. | Text color of "Trigger"/"Action" label in card footer. Defaults to textMuted. |
 | `emptyTextColor` | Текст empty-state | Empty state text | Color picker + hex input | Цвет текста при пустых списках (нет сервисов, нет результатов поиска и т.п.). | Text color for empty states (no services, no search results). |
 | `errorTextColor` | Текст error-state | Error state text | Color picker + hex input | Цвет текста сообщений об ошибках. | Text color for error messages. |
 | `skeletonColor` | Skeleton loader | Skeleton loader | Input (текст) | Цвет или градиент скелетона при загрузке.<br>Можно задать gradient или использовать пресеты light/dark. | Color or gradient for the loading skeleton. Can use light/dark presets. |
@@ -144,6 +147,7 @@ initWidget({
     sectionTitleSize: '20px',
     detailCardNameSize: '17px',
     detailCardTypeSize: '17px',
+    detailCardTypeWeight: 600,
     showMoreSize: '17px',
     backSize: '17px'
   },
@@ -157,6 +161,7 @@ initWidget({
   showSectionTitles: true,
   showCardLogos: true,
   showDetailCardType: true,
+  showDetailCardFooter: true,
 
   texts: {
     galleryTitle: 'Available integrations',
@@ -192,7 +197,7 @@ initWidget({
     searchBackground, searchBorderColor, searchFocusBorderColor,
     cardBorderColor, cardHoverBorderColor, cardHoverShadow,
     tabBackground, tabActiveBackground, tabBorderColor,
-    detailCardFooterBackground,
+    detailCardFooterBackground, detailCardFooterLabelColor,
     emptyTextColor, errorTextColor, skeletonColor,
     backButtonHoverBackground,
     showMoreBackground, showMoreBorderColor
