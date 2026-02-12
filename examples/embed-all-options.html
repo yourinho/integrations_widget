@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Albato Widget — All Options Reference</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 32px 20px 48px;
+      background: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .demo-header {
+      text-align: center;
+      margin-bottom: 24px;
+      max-width: 700px;
+    }
+    .demo-header h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #2C3534;
+    }
+    .demo-header p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #6b7280;
+    }
+    .demo-header code {
+      padding: 2px 6px;
+      font-size: 13px;
+      background: #e5e7eb;
+      border-radius: 4px;
+    }
+    .demo-label {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #6b7280;
+      background: #e5e7eb;
+      border-radius: 6px;
+    }
+    .widget-wrapper {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .widget-container {
+      width: 100%;
+      max-width: 1200px;
+      min-height: 400px;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="demo-header">
+    <span class="demo-label">All options reference</span>
+    <h1>Albato Apps Widget</h1>
+    <p>Example with all init options and default values. Comments show customization examples.</p>
+  </header>
+  <div class="widget-wrapper">
+    <div id="albato-widget" class="widget-container"></div>
+  </div>
+  <!-- Use ../dist/albato-widget.iife.js for local dev, or production URL for deployment -->
+  <script src="../dist/albato-widget.iife.js"></script>
+  <script>
+    AlbatoWidget.initWidget({
+      container: document.getElementById('albato-widget'),
+
+      // === Data filters ===
+      // regions: [2, 3],           // e.g. only BR (2) and Global (3)
+      // partnerIds: [5, 10, 15],  // e.g. allowlist for paid clients
+
+      // === Layout & alignment ===
+      align: 'center',            // 'center' | 'left' | 'right'
+      // maxWidth: '1040px',      // e.g. '1200px', '100%'
+      // galleryPadding: '80px', // e.g. '40px' for compact layout
+      // galleryGap: '32px',
+      // galleryCardsGap: '32px',
+      // detailPadding: '80px',
+      // detailGap: '32px',
+      // detailCardsGap: '25px',
+
+      // === Card sizes ===
+      cardSize: 'l',              // 'l' | 'm' | 's'
+      detailCardSize: 'l',        // 'l' | 'm' | 's'
+      detailLayout: 'stacked',    // 'stacked' | 'columns'
+      cardRadius: '16px',          // e.g. '8px', '0' for sharp corners
+      detailCardRadius: '16px',
+
+      // === Typography ===
+      font: "'Inter', sans-serif", // e.g. "'Open Sans', sans-serif"
+      typography: {
+        galleryTitleSize: '56px',   // e.g. '48px' for smaller heading
+        galleryTitleWeight: 700,
+        searchSize: '15px',
+        cardTitleSize: '14px',      // e.g. '12px' for compact cards
+        cardTitleWeight: 400,
+        detailTitleSize: '32px',
+        detailTitleWeight: 700,
+        detailSubtitleSize: '17px',
+        tabSize: '15px',
+        sectionTitleSize: '20px',
+        detailCardNameSize: '17px',
+        detailCardTypeSize: '17px',
+        detailCardTypeWeight: 600,  // e.g. 700 for bolder label
+        showMoreSize: '17px',
+        backSize: '17px'
+      },
+
+      // === Visibility ===
+      showGalleryTitle: true,     // false to hide when page has its own title
+      showSearch: true,
+      showShowMore: true,
+      showDetailTitle: true,
+      showDetailSubtitle: true,
+      showDetailTabs: true,       // false for stacked = both sections always visible
+      showSectionTitles: true,
+      showCardLogos: true,        // false for text-only cards
+      showDetailCardType: true,   // false = hide Trigger/Action label, keep footer bar
+      showDetailCardFooter: true, // false = hide entire footer in trigger/action cards
+
+      // === Texts (localization) ===
+      texts: {
+        galleryTitle: 'Available integrations',         // e.g. 'Our integrations'
+        searchPlaceholder: 'Search integrations',      // e.g. 'Search...'
+        showMore: 'Show more',                         // e.g. 'Load more'
+        back: 'Back',
+        triggersTab: 'Triggers',
+        actionsTab: 'Actions',
+        triggersAndActionsTab: 'Triggers & Actions',
+        emptyGallery: 'No integrations available',
+        emptySearch: 'No services found',
+        emptyTriggers: 'This service has no available triggers',
+        emptyActions: 'This service has no available actions',
+        errorGeneral: "We couldn't load integrations right now.",
+        errorServices: 'Failed to load services',
+        retry: 'Try again'
+      },
+
+      // === Colors ===
+      colors: {
+        primary: '#2C3534',
+        background: '#FFFFFF',
+        surface: '#F4F5F6',
+        text: '#2C3534',
+        textMuted: '#A0A4B1',
+        border: '#E6E8EC',
+        textOnPrimary: '#FFFFFF',
+        cardBackground: '#FFFFFF',       // e.g. '#f0f9ff' for tinted cards
+        detailCardBackground: '#FFFFFF',
+        // Extended (Phase 2):
+        // galleryBackground: '#FFFFFF',
+        // detailBackground: '#FFFFFF',
+        // searchBackground: '#FFFFFF',
+        // searchBorderColor: '#E6E8EC',
+        // searchFocusBorderColor: '#A0A4B1',
+        // cardBorderColor: '#E6E8EC',
+        // cardHoverBorderColor: '#2C3534',
+        // cardHoverShadow: '0 4px 12px rgba(0,0,0,0.08)',
+        // tabBackground: '#FFFFFF',
+        // tabActiveBackground: '#2C3534',
+        // tabBorderColor: '#E6E8EC',
+        // detailCardFooterBackground: '#F4F5F6',
+        // detailCardFooterLabelColor: '#A0A4B1',
+        // emptyTextColor: '#A0A4B1',
+        // errorTextColor: '#A0A4B1',
+        // backButtonHoverBackground: '#F4F5F6',
+        // showMoreBackground: '#FFFFFF',
+        // showMoreBorderColor: '#E6E8EC'
+      }
+    });
+  </script>
+</body>
+</html>

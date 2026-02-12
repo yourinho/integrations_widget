@@ -1,7 +1,7 @@
 /* Albato Widget - namespaced styles (Figma spec) */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-/* Customizable via initWidget({ colors: { ... }, cardRadius, detailCardRadius }) */
+/* Customizable via initWidget({ colors, typography, layout, ... }) */
 .albato-widget {
   --aw-color-primary: #2C3534;
   --aw-color-background: #FFFFFF;
@@ -14,6 +14,35 @@
   --aw-color-detail-card-background: var(--aw-color-background);
   --aw-card-radius: 16px;
   --aw-detail-card-radius: 16px;
+
+  /* Layout (Phase 2) */
+  --aw-max-width: 1040px;
+  --aw-gallery-padding: 80px;
+  --aw-gallery-gap: 32px;
+  --aw-gallery-cards-gap: 32px;
+  --aw-detail-padding: 80px;
+  --aw-detail-gap: 32px;
+  --aw-detail-cards-gap: 25px;
+
+  /* Typography (Phase 1) */
+  --aw-font-gallery-title-size: 56px;
+  --aw-font-gallery-title-weight: 700;
+  --aw-font-search-size: 15px;
+  --aw-font-card-title-size: 14px;
+  --aw-font-card-title-weight: 400;
+  --aw-font-detail-title-size: 32px;
+  --aw-font-detail-title-weight: 700;
+  --aw-font-detail-subtitle-size: 17px;
+  --aw-font-tab-size: 15px;
+  --aw-font-section-title-size: 20px;
+  --aw-font-detail-card-name-size: 17px;
+  --aw-font-detail-card-type-size: 17px;
+  --aw-font-detail-card-type-weight: 600;
+  --aw-font-show-more-size: 17px;
+  --aw-font-back-size: 17px;
+
+  /* Phase 2 color extensions (optional overrides) */
+  --aw-color-skeleton-color: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
 
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-size: 14px;
@@ -46,12 +75,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 80px;
-  gap: 32px;
-  max-width: 1200px;
+  padding: var(--aw-gallery-padding);
+  gap: var(--aw-gallery-gap);
+  max-width: var(--aw-max-width);
   width: 100%;
   min-height: 812px;
-  background: var(--aw-color-background);
+  background: var(--aw-color-gallery-background, var(--aw-color-background));
   box-sizing: border-box;
 }
 
@@ -74,13 +103,13 @@
 /* Title - Available integrations */
 .aw-gallery-title {
   width: 100%;
-  max-width: 1040px;
+  max-width: var(--aw-max-width);
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   font-style: normal;
-  font-weight: 700;
-  font-size: 56px;
-  line-height: 60px;
+  font-weight: var(--aw-font-gallery-title-weight);
+  font-size: var(--aw-font-gallery-title-size);
+  line-height: 1.07;
   text-align: center;
   color: var(--aw-color-text);
 }
@@ -103,7 +132,7 @@
 /* Search bar */
 .aw-search {
   width: 100%;
-  max-width: 1040px;
+  max-width: var(--aw-max-width);
   position: relative;
 }
 
@@ -129,12 +158,12 @@
   height: 48px;
   padding: 0 16px 0 44px;
   box-sizing: border-box;
-  background: var(--aw-color-background);
-  border: 1px solid var(--aw-color-border);
+  background: var(--aw-color-search-background, var(--aw-color-background));
+  border: 1px solid var(--aw-color-search-border-color, var(--aw-color-border));
   border-radius: 12px;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   font-weight: 400;
-  font-size: 15px;
+  font-size: var(--aw-font-search-size);
   line-height: 20px;
   letter-spacing: -0.01em;
   color: var(--aw-color-text);
@@ -146,7 +175,7 @@
 
 .aw-search-input:focus {
   outline: none;
-  border-color: var(--aw-color-text-muted);
+  border-color: var(--aw-color-search-focus-border-color, var(--aw-color-text-muted));
 }
 
 /* Frame - app gallery */
@@ -157,9 +186,9 @@
   align-items: center;
   justify-content: center;
   align-content: center;
-  gap: 32px;
+  gap: var(--aw-gallery-cards-gap);
   width: 100%;
-  max-width: 1040px;
+  max-width: var(--aw-max-width);
 }
 
 .albato-widget[data-align="left"] .aw-gallery {
@@ -190,7 +219,7 @@
   width: 180px;
   height: 180px;
   background: var(--aw-color-card-background);
-  border: 1px solid var(--aw-color-border);
+  border: 1px solid var(--aw-color-card-border-color, var(--aw-color-border));
   border-radius: var(--aw-card-radius);
   cursor: pointer;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -244,8 +273,8 @@
 }
 
 .aw-card:hover {
-  border-color: var(--aw-color-primary);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: var(--aw-color-card-hover-border-color, var(--aw-color-primary));
+  box-shadow: var(--aw-color-card-hover-shadow, 0 4px 12px rgba(0, 0, 0, 0.08));
 }
 
 .aw-card-inner {
@@ -286,9 +315,9 @@
 .aw-card-title {
   width: 100%;
   max-width: 148px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
+  font-family: inherit;
+  font-weight: var(--aw-font-card-title-weight);
+  font-size: var(--aw-font-card-title-size);
   line-height: 20px;
   text-align: center;
   letter-spacing: -0.01em;
@@ -315,7 +344,7 @@
 
 /* Skeleton */
 .aw-skeleton {
-  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background: var(--aw-color-skeleton-color);
   background-size: 200% 100%;
   animation: aw-skeleton-pulse 1.5s ease-in-out infinite;
 }
@@ -422,11 +451,11 @@
 .aw-empty {
   padding: 48px 24px;
   text-align: center;
-  color: var(--aw-color-text-muted);
+  color: var(--aw-color-empty-text-color, var(--aw-color-text-muted));
   font-size: 17px;
   line-height: 24px;
   width: 100%;
-  max-width: 1040px;
+  max-width: var(--aw-max-width);
 }
 
 .albato-widget[data-align="left"] .aw-empty {
@@ -446,7 +475,7 @@
   padding: 40px 24px;
   text-align: center;
   width: 100%;
-  max-width: 1040px;
+  max-width: var(--aw-max-width);
 }
 
 .albato-widget[data-align="left"] .aw-error {
@@ -459,7 +488,7 @@
 
 .aw-error p {
   margin: 0 0 16px;
-  color: var(--aw-color-text-muted);
+  color: var(--aw-color-error-text-color, var(--aw-color-text-muted));
   font-size: 17px;
 }
 
@@ -492,13 +521,13 @@
   height: 56px;
   white-space: nowrap;
   flex-shrink: 0;
-  background: var(--aw-color-background);
-  border: 2px solid var(--aw-color-border);
+  background: var(--aw-color-show-more-background, var(--aw-color-background));
+  border: 2px solid var(--aw-color-show-more-border-color, var(--aw-color-border));
   border-radius: 12px;
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   font-weight: 600;
-  font-size: 17px;
+  font-size: var(--aw-font-show-more-size);
   line-height: 24px;
   letter-spacing: -0.01em;
   color: var(--aw-color-text);
@@ -518,12 +547,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 80px;
-  gap: 32px;
-  max-width: 1200px;
+  padding: var(--aw-detail-padding);
+  gap: var(--aw-detail-gap);
+  max-width: var(--aw-max-width);
   width: 100%;
   min-height: 1648px;
-  background: var(--aw-color-background);
+  background: var(--aw-color-detail-background, var(--aw-color-background));
   box-sizing: border-box;
 }
 
@@ -547,7 +576,7 @@
 .aw-detail-header {
   position: relative;
   width: 100%;
-  max-width: 1040px;
+  max-width: var(--aw-max-width);
   height: 56px;
   flex: none;
 }
@@ -568,16 +597,16 @@
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   font-weight: 600;
-  font-size: 17px;
+  font-size: var(--aw-font-back-size);
   line-height: 24px;
   letter-spacing: -0.01em;
   color: var(--aw-color-text);
 }
 
 .aw-detail-back:hover {
-  background: var(--aw-color-surface);
+  background: var(--aw-color-back-button-hover-background, var(--aw-color-surface));
 }
 
 .aw-detail-back-icon {
@@ -588,12 +617,12 @@
 
 .aw-detail-title {
   width: 100%;
-  max-width: 1040px;
+  max-width: var(--aw-max-width);
   margin: 0 0 -16px 0;
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 40px;
+  font-family: inherit;
+  font-weight: var(--aw-font-detail-title-weight);
+  font-size: var(--aw-font-detail-title-size);
+  line-height: 1.25;
   text-align: center;
   color: var(--aw-color-text);
 }
@@ -615,11 +644,11 @@
 
 .aw-detail-subtitle {
   width: 100%;
-  max-width: 1040px;
+  max-width: var(--aw-max-width);
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   font-weight: 400;
-  font-size: 17px;
+  font-size: var(--aw-font-detail-subtitle-size);
   line-height: 24px;
   text-align: center;
   color: var(--aw-color-text-muted);
@@ -674,11 +703,11 @@
   height: 40px;
   border-radius: 26px;
   border: 1.5px solid transparent;
-  background: var(--aw-color-background);
+  background: var(--aw-color-tab-background, var(--aw-color-background));
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   font-weight: 400;
-  font-size: 15px;
+  font-size: var(--aw-font-tab-size);
   line-height: 20px;
   color: var(--aw-color-text);
   white-space: nowrap;
@@ -694,13 +723,13 @@
 }
 
 .aw-detail-tab.active {
-  background: var(--aw-color-primary);
+  background: var(--aw-color-tab-active-background, var(--aw-color-primary));
   color: var(--aw-color-text-on-primary);
-  border-color: var(--aw-color-primary);
+  border-color: var(--aw-color-tab-active-background, var(--aw-color-primary));
 }
 
 .aw-detail-tab:not(.active) {
-  border-color: var(--aw-color-border);
+  border-color: var(--aw-color-tab-border-color, var(--aw-color-border));
 }
 
 .aw-detail-tab:not(.active):hover {
@@ -713,7 +742,7 @@
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  max-width: 1040px;
+  max-width: var(--aw-max-width);
   gap: 24px;
 }
 
@@ -802,9 +831,9 @@
 .aw-detail-section-title {
   width: 100%;
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   font-weight: 500;
-  font-size: 20px;
+  font-size: var(--aw-font-section-title-size);
   line-height: 24px;
   color: var(--aw-color-text-muted);
 }
@@ -824,7 +853,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 25px;
+  gap: var(--aw-detail-cards-gap);
   width: 100%;
 }
 
@@ -844,7 +873,7 @@
   width: 330px;
   height: 136px;
   background: var(--aw-color-detail-card-background);
-  border: 1px solid var(--aw-color-border);
+  border: 1px solid var(--aw-color-card-border-color, var(--aw-color-border));
   border-radius: var(--aw-detail-card-radius);
   flex: none;
   overflow: hidden;
@@ -951,9 +980,9 @@
 .aw-detail-card-name {
   flex: 1;
   min-width: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   font-weight: 600;
-  font-size: 17px;
+  font-size: var(--aw-font-detail-card-name-size);
   line-height: 24px;
   letter-spacing: -0.01em;
   color: var(--aw-color-text);
@@ -977,7 +1006,7 @@
   padding: 8px 16px;
   flex: 0 0 40px;
   min-height: 40px;
-  background: var(--aw-color-surface);
+  background: var(--aw-color-detail-card-footer-background, var(--aw-color-surface));
   border-radius: 0 0 var(--aw-detail-card-radius) var(--aw-detail-card-radius);
 }
 
@@ -994,12 +1023,12 @@
 }
 
 .aw-detail-card-type {
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  font-size: 17px;
+  font-family: inherit;
+  font-weight: var(--aw-font-detail-card-type-weight);
+  font-size: var(--aw-font-detail-card-type-size);
   line-height: 24px;
   letter-spacing: -0.01em;
-  color: var(--aw-color-text-muted);
+  color: var(--aw-color-detail-card-footer-label-color, var(--aw-color-text-muted));
 }
 
 .albato-widget[data-detail-card-size="m"] .aw-detail-card-type {
