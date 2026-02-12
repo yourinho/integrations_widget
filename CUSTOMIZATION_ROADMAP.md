@@ -19,22 +19,22 @@
 
 ### Typography (fontSize по элементам)
 
-| Параметр | Элемент | Дефолт |
-|----------|---------|--------|
-| `typography.galleryTitleSize` | «Available integrations» | `56px` (32px mobile) |
-| `typography.galleryTitleWeight` | | `700` |
-| `typography.searchSize` | Поле поиска | `15px` |
-| `typography.cardTitleSize` | Название в карточке партнёра | `14px` (L), `15px` (M), `11px` (S) |
-| `typography.cardTitleWeight` | | `400` |
-| `typography.detailTitleSize` | Название сервиса | `32px` (24px mobile) |
-| `typography.detailTitleWeight` | | `700` |
-| `typography.detailSubtitleSize` | Описание сервиса | `17px` |
-| `typography.tabSize` | Вкладки (Triggers, Actions) | `15px` |
-| `typography.sectionTitleSize` | «Triggers», «Actions» | `20px` |
-| `typography.detailCardNameSize` | Название триггера/экшена | `17px` |
-| `typography.detailCardTypeSize` | Trigger/Action в футере карточки | `17px` |
-| `typography.showMoreSize` | Кнопка «Show more» | `17px` |
-| `typography.backSize` | Кнопка «Back» | `17px` |
+| Параметр | Элемент | Дефолт | UI элемент |
+|----------|---------|--------|------------|
+| `typography.galleryTitleSize` | «Available integrations» | `56px` (32px mobile) | Input (текст), placeholder: `56px` |
+| `typography.galleryTitleWeight` | | `700` | Select: 400, 500, 600, 700 |
+| `typography.searchSize` | Поле поиска | `15px` | Input (текст), placeholder: `15px` |
+| `typography.cardTitleSize` | Название в карточке партнёра | `14px` (L), `15px` (M), `11px` (S) | Input (текст), placeholder: `14px` |
+| `typography.cardTitleWeight` | | `400` | Select: 400, 500, 600, 700 |
+| `typography.detailTitleSize` | Название сервиса | `32px` (24px mobile) | Input (текст), placeholder: `32px` |
+| `typography.detailTitleWeight` | | `700` | Select: 400, 500, 600, 700 |
+| `typography.detailSubtitleSize` | Описание сервиса | `17px` | Input (текст), placeholder: `17px` |
+| `typography.tabSize` | Вкладки (Triggers, Actions) | `15px` | Input (текст), placeholder: `15px` |
+| `typography.sectionTitleSize` | «Triggers», «Actions» | `20px` | Input (текст), placeholder: `20px` |
+| `typography.detailCardNameSize` | Название триггера/экшена | `17px` | Input (текст), placeholder: `17px` |
+| `typography.detailCardTypeSize` | Trigger/Action в футере карточки | `17px` | Input (текст), placeholder: `17px` |
+| `typography.showMoreSize` | Кнопка «Show more» | `17px` | Input (текст), placeholder: `17px` |
+| `typography.backSize` | Кнопка «Back» | `17px` | Input (текст), placeholder: `17px` |
 
 Опционально: `typography.galleryTitleColor`, `typography.cardTitleColor` и т.п. — если нужна раздельная настройка цвета текста по элементам (иначе наследуют из `colors`).
 
@@ -42,38 +42,38 @@
 
 ### Visibility (show*)
 
-| Параметр | Описание | Дефолт |
-|----------|----------|--------|
-| `showGalleryTitle` | Заголовок «Available integrations» | `true` |
-| `showSearch` | Поле поиска | `true` |
-| `showShowMore` | Кнопка «Show more» | `true` |
-| `showDetailTitle` | Название сервиса на странице детали | `true` |
-| `showDetailSubtitle` | Описание сервиса | `true` |
-| `showDetailTabs` | Вкладки Triggers/Actions (при layout stacked) | `true` |
-| `showSectionTitles` | Заголовки «Triggers» и «Actions» | `true` |
-| `showCardLogos` | Логотипы в карточках партнёров | `true` |
-| `showDetailCardType` | Текст Trigger/Action в карточке триггера/экшена | `true` |
+| Параметр | Описание | Дефолт | UI элемент |
+|----------|----------|--------|------------|
+| `showGalleryTitle` | Заголовок «Available integrations» | `true` | Checkbox |
+| `showSearch` | Поле поиска | `true` | Checkbox |
+| `showShowMore` | Кнопка «Show more» | `true` | Checkbox |
+| `showDetailTitle` | Название сервиса на странице детали | `true` | Checkbox |
+| `showDetailSubtitle` | Описание сервиса | `true` | Checkbox |
+| `showDetailTabs` | Вкладки Triggers/Actions (при layout stacked) | `true` | Checkbox |
+| `showSectionTitles` | Заголовки «Triggers» и «Actions» | `true` | Checkbox |
+| `showCardLogos` | Логотипы в карточках партнёров | `true` | Checkbox |
+| `showDetailCardType` | Текст Trigger/Action в карточке триггера/экшена | `true` | Checkbox |
 
 ---
 
 ### Texts (локализация)
 
-| Параметр | Дефолт |
-|----------|--------|
-| `texts.galleryTitle` | `"Available integrations"` |
-| `texts.searchPlaceholder` | `"Search integrations"` |
-| `texts.showMore` | `"Show more"` |
-| `texts.back` | `"Back"` |
-| `texts.triggersTab` | `"Triggers"` |
-| `texts.actionsTab` | `"Actions"` |
-| `texts.triggersAndActionsTab` | `"Triggers & Actions"` |
-| `texts.emptyGallery` | `"No integrations available"` |
-| `texts.emptySearch` | `"No services found"` |
-| `texts.emptyTriggers` | `"This service has no available triggers"` |
-| `texts.emptyActions` | `"This service has no available actions"` |
-| `texts.errorGeneral` | `"We couldn't load integrations right now."` |
-| `texts.errorServices` | `"Failed to load services"` |
-| `texts.retry` | `"Try again"` |
+| Параметр | Дефолт | UI элемент |
+|----------|--------|------------|
+| `texts.galleryTitle` | `"Available integrations"` | Input (текст) |
+| `texts.searchPlaceholder` | `"Search integrations"` | Input (текст) |
+| `texts.showMore` | `"Show more"` | Input (текст) |
+| `texts.back` | `"Back"` | Input (текст) |
+| `texts.triggersTab` | `"Triggers"` | Input (текст) |
+| `texts.actionsTab` | `"Actions"` | Input (текст) |
+| `texts.triggersAndActionsTab` | `"Triggers & Actions"` | Input (текст) |
+| `texts.emptyGallery` | `"No integrations available"` | Input (текст) |
+| `texts.emptySearch` | `"No services found"` | Input (текст) |
+| `texts.emptyTriggers` | `"This service has no available triggers"` | Input (текст) |
+| `texts.emptyActions` | `"This service has no available actions"` | Input (текст) |
+| `texts.errorGeneral` | `"We couldn't load integrations right now."` | Textarea |
+| `texts.errorServices` | `"Failed to load services"` | Input (текст) |
+| `texts.retry` | `"Try again"` | Input (текст) |
 
 ---
 
@@ -83,40 +83,40 @@
 
 Дополнительные ключи в объекте `colors` (к уже существующим):
 
-| Параметр | Элемент |
-|----------|---------|
-| `galleryBackground` | Фон области галереи |
-| `detailBackground` | Фон страницы детали сервиса |
-| `searchBackground` | Фон поля поиска |
-| `searchBorderColor` | Граница поля поиска |
-| `searchFocusBorderColor` | Граница поля поиска в фокусе |
-| `cardBorderColor` | Граница карточки партнёра |
-| `cardHoverBorderColor` | Граница карточки при hover |
-| `cardHoverShadow` | Тень карточки при hover (CSS box-shadow) |
-| `tabBackground` | Фон неактивных вкладок |
-| `tabActiveBackground` | Фон активной вкладки |
-| `tabBorderColor` | Граница вкладок |
-| `detailCardFooterBackground` | Фон футера карточки триггера/экшена |
-| `emptyTextColor` | Текст empty-state |
-| `errorTextColor` | Текст error-state |
-| `skeletonColor` | Цвет skeleton loader (gradient) |
-| `backButtonHoverBackground` | Фон кнопки Back при hover |
-| `showMoreBackground` | Фон кнопки «Show more» |
-| `showMoreBorderColor` | Граница кнопки «Show more» |
+| Параметр | Элемент | UI элемент |
+|----------|---------|------------|
+| `galleryBackground` | Фон области галереи | Color picker + hex input |
+| `detailBackground` | Фон страницы детали сервиса | Color picker + hex input |
+| `searchBackground` | Фон поля поиска | Color picker + hex input |
+| `searchBorderColor` | Граница поля поиска | Color picker + hex input |
+| `searchFocusBorderColor` | Граница поля поиска в фокусе | Color picker + hex input |
+| `cardBorderColor` | Граница карточки партнёра | Color picker + hex input |
+| `cardHoverBorderColor` | Граница карточки при hover | Color picker + hex input |
+| `cardHoverShadow` | Тень карточки при hover (CSS box-shadow) | Input (текст), placeholder: `0 4px 12px rgba(0,0,0,0.08)` |
+| `tabBackground` | Фон неактивных вкладок | Color picker + hex input |
+| `tabActiveBackground` | Фон активной вкладки | Color picker + hex input |
+| `tabBorderColor` | Граница вкладок | Color picker + hex input |
+| `detailCardFooterBackground` | Фон футера карточки триггера/экшена | Color picker + hex input |
+| `emptyTextColor` | Текст empty-state | Color picker + hex input |
+| `errorTextColor` | Текст error-state | Color picker + hex input |
+| `skeletonColor` | Цвет skeleton loader (gradient) | Input (текст) или пресеты: light/dark |
+| `backButtonHoverBackground` | Фон кнопки Back при hover | Color picker + hex input |
+| `showMoreBackground` | Фон кнопки «Show more» | Color picker + hex input |
+| `showMoreBorderColor` | Граница кнопки «Show more» | Color picker + hex input |
 
 ---
 
 ### Layout (padding, gap)
 
-| Параметр | Элемент | Дефолт |
-|----------|---------|--------|
-| `maxWidth` | Максимальная ширина контента | `"1040px"` |
-| `galleryPadding` | Отступы области галереи | `"80px"` |
-| `galleryGap` | Расстояние между блоками (заголовок, поиск, карточки) | `"32px"` |
-| `galleryCardsGap` | Расстояние между карточками партнёров | `"32px"` |
-| `detailPadding` | Отступы страницы сервиса | `"80px"` |
-| `detailGap` | Расстояние между блоками на странице сервиса | `"32px"` |
-| `detailCardsGap` | Расстояние между карточками триггеров/экшенов | `"25px"` |
+| Параметр | Элемент | Дефолт | UI элемент |
+|----------|---------|--------|------------|
+| `maxWidth` | Максимальная ширина контента | `"1040px"` | Input (текст), placeholder: `1040px` или `100%` |
+| `galleryPadding` | Отступы области галереи | `"80px"` | Input (текст), placeholder: `80px` |
+| `galleryGap` | Расстояние между блоками (заголовок, поиск, карточки) | `"32px"` | Input (текст), placeholder: `32px` |
+| `galleryCardsGap` | Расстояние между карточками партнёров | `"32px"` | Input (текст), placeholder: `32px` |
+| `detailPadding` | Отступы страницы сервиса | `"80px"` | Input (текст), placeholder: `80px` |
+| `detailGap` | Расстояние между блоками на странице сервиса | `"32px"` | Input (текст), placeholder: `32px` |
+| `detailCardsGap` | Расстояние между карточками триггеров/экшенов | `"25px"` | Input (текст), placeholder: `25px` |
 
 ---
 
