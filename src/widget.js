@@ -85,7 +85,7 @@ const DEFAULT_TEXTS_RU = {
   galleryTitle: 'Доступные сервисы',
   searchPlaceholder: 'Поиск по названию...',
   detailTitleTemplate: 'Триггеры и экшены для {name}',
-  detailSubtitleTemplate: 'Триггеры фиксируют изменения в {name}, а действия автоматически реагируют — передавая данные и выполняя нужные обновления.',
+  detailSubtitleTemplate: 'Триггеры фиксируют изменения в {name}, а действия автоматически реагируют — передавая данные и выполняя нужные обновления',
   showMore: 'Показать еще',
   back: 'Назад',
   triggersTab: 'Триггеры',
