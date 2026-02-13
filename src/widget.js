@@ -62,6 +62,8 @@ const ALIGN_OPTIONS = ['left', 'center', 'right'];
 const DEFAULT_TEXTS = {
   galleryTitle: 'Available integrations',
   searchPlaceholder: 'Search integrations',
+  detailTitleTemplate: 'Triggers and actions for {name} integrations',
+  detailSubtitleTemplate: 'Triggers detect changes in {name}, and actions respond instantly — moving data or sending updates',
   showMore: 'Show more',
   back: 'Back',
   triggersTab: 'Triggers',
@@ -74,6 +76,14 @@ const DEFAULT_TEXTS = {
   errorGeneral: "We couldn't load integrations right now.",
   errorServices: 'Failed to load services',
   retry: 'Try again',
+};
+
+const DEFAULT_TEXTS_RU = {
+  ...DEFAULT_TEXTS,
+  galleryTitle: 'Доступные сервисы',
+  searchPlaceholder: 'Поиск по названию...',
+  detailTitleTemplate: 'Триггеры и экшены для {name}',
+  detailSubtitleTemplate: 'Триггеры фиксируют изменения в {name}, а действия автоматически реагируют — передавая данные и выполняя нужные обновления.',
 };
 
 const DEFAULT_TYPOGRAPHY = {
@@ -206,7 +216,10 @@ export function initWidget(opts = {}) {
   }
   container.classList.add('albato-widget');
 
-  const texts = { ...DEFAULT_TEXTS, ...(opts.texts && typeof opts.texts === 'object' ? opts.texts : {}) };
+  const supportedLanguages = ['de', 'en', 'es', 'fr', 'pt', 'ru', 'tr'];
+  const language = supportedLanguages.includes(opts.language) ? opts.language : 'en';
+  const baseTexts = language === 'ru' ? DEFAULT_TEXTS_RU : DEFAULT_TEXTS;
+  const texts = { ...baseTexts, ...(opts.texts && typeof opts.texts === 'object' ? opts.texts : {}) };
   const typography = { ...DEFAULT_TYPOGRAPHY, ...(opts.typography && typeof opts.typography === 'object' ? opts.typography : {}) };
   const visibility = { ...DEFAULT_VISIBILITY, ...Object.fromEntries(Object.keys(DEFAULT_VISIBILITY).map((k) => [k, getOpt(opts, k, DEFAULT_VISIBILITY[k])])) };
 
@@ -216,9 +229,6 @@ export function initWidget(opts = {}) {
   const alignVal = typeof opts.align === 'string' && ALIGN_OPTIONS.includes(opts.align.toLowerCase()) ? opts.align.toLowerCase() : 'center';
 
   const partnerIdsList = Array.isArray(partnerIds) ? partnerIds.filter((id) => typeof id === 'number' || (typeof id === 'string' && /^\d+$/.test(id))).map(Number) : undefined;
-
-  const supportedLanguages = ['de', 'en', 'es', 'fr', 'pt', 'ru', 'tr'];
-  const language = supportedLanguages.includes(opts.language) ? opts.language : 'en';
 
   const merged = {
     ...opts,
@@ -494,7 +504,7 @@ function mountServiceDetail(container, partner) {
 
   Promise.allSettled([fetchTriggers(partnerId, 1), fetchActions(partnerId, 1)])
     .then(([triggersResult, actionsResult]) => {
-      const title = getPartnerTitle(partner, opts2.language || 'en') || 'Service';
+      const title = getPartnerTitle(partner, opts.language || 'en') || 'Service';
       const logoUrl = partner?.logo?.['100x100'] || '';
 
       const triggersRes = triggersResult.status === 'fulfilled' ? triggersResult.value : null;
@@ -578,8 +588,10 @@ function mountServiceDetail(container, partner) {
       `;
 
       const backLabel = escapeHtml(t.back || 'Back');
-      const detailTitleHtml = showDetailTitle ? `<h2 class="${CSS_PREFIX}-detail-title">Triggers and actions for ${escapeHtml(title)} integrations</h2>` : '';
-      const detailSubtitleHtml = showDetailSubtitle ? `<p class="${CSS_PREFIX}-detail-subtitle">Triggers detect changes in ${escapeHtml(title)}, and actions respond instantly — moving data or sending updates</p>` : '';
+      const detailTitleTmpl = t.detailTitleTemplate || DEFAULT_TEXTS.detailTitleTemplate;
+      const detailSubtitleTmpl = t.detailSubtitleTemplate || DEFAULT_TEXTS.detailSubtitleTemplate;
+      const detailTitleHtml = showDetailTitle ? `<h2 class="${CSS_PREFIX}-detail-title">${escapeHtml((detailTitleTmpl || '').replace(/\{name\}/g, title))}</h2>` : '';
+      const detailSubtitleHtml = showDetailSubtitle ? `<p class="${CSS_PREFIX}-detail-subtitle">${escapeHtml((detailSubtitleTmpl || '').replace(/\{name\}/g, title))}</p>` : '';
 
       root.innerHTML = `
         <div class="${CSS_PREFIX}-detail">

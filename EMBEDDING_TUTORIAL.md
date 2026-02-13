@@ -405,7 +405,7 @@ Default: `"16px"`.
 ## Live Examples
 
 - **Basic embed:** [https://yourinho.github.io/integrations_widget/](https://yourinho.github.io/integrations_widget/)
-- **Examples** in the `examples/` folder: `embed.html`, `embed-regions-filter.html`, `embed-dark-theme.html`, `embed-card-size.html`, `embed-card-radius.html`, `embed-card-background.html`, `embed-detail-columns.html`, `embed-partner-ids.html`, `embed-align-left.html`.
+- **Examples** in the `examples/` folder: `embed.html`, `embed-regions-filter.html`, `embed-dark-theme.html`, `embed-card-size.html`, `embed-card-radius.html`, `embed-card-background.html`, `embed-detail-columns.html`, `embed-partner-ids.html`, `embed-align-left.html`, `embed-language-ru.html`.
 
 ---
 
