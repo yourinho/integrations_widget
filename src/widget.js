@@ -69,6 +69,8 @@ const DEFAULT_TEXTS = {
   triggersTab: 'Triggers',
   actionsTab: 'Actions',
   triggersAndActionsTab: 'Triggers & Actions',
+  triggerLabel: 'Trigger',
+  actionLabel: 'Action',
   emptyGallery: 'No integrations available',
   emptySearch: 'No services found',
   emptyTriggers: 'This service has no available triggers',
@@ -84,6 +86,13 @@ const DEFAULT_TEXTS_RU = {
   searchPlaceholder: 'Поиск по названию...',
   detailTitleTemplate: 'Триггеры и экшены для {name}',
   detailSubtitleTemplate: 'Триггеры фиксируют изменения в {name}, а действия автоматически реагируют — передавая данные и выполняя нужные обновления.',
+  showMore: 'Показать еще',
+  back: 'Назад',
+  triggersTab: 'Триггеры',
+  actionsTab: 'Действия',
+  triggersAndActionsTab: 'Всё',
+  triggerLabel: 'Триггер',
+  actionLabel: 'Действие',
 };
 
 const DEFAULT_TYPOGRAPHY = {
@@ -526,8 +535,8 @@ function mountServiceDetail(container, partner) {
         return renderDetailCards(res.data, logoUrl, typeLabel, opts2);
       };
 
-      const triggersHtml = renderSection(triggersRes, t.emptyTriggers || 'This service has no available triggers', 'Failed to load triggers', 'triggers', 'Trigger');
-      const actionsHtml = renderSection(actionsRes, t.emptyActions || 'This service has no available actions', 'Failed to load actions', 'actions', 'Action');
+      const triggersHtml = renderSection(triggersRes, t.emptyTriggers || 'This service has no available triggers', 'Failed to load triggers', 'triggers', t.triggerLabel || 'Trigger');
+      const actionsHtml = renderSection(actionsRes, t.emptyActions || 'This service has no available actions', 'Failed to load actions', 'actions', t.actionLabel || 'Action');
 
       const layout = opts2.detailLayout || 'stacked';
       const isColumns = layout === 'columns';
@@ -626,10 +635,12 @@ function mountServiceDetail(container, partner) {
       });
     })
     .catch(() => {
+      const errOpts = container._awOptions || {};
+      const errBack = escapeHtml((errOpts.texts || DEFAULT_TEXTS).back || 'Back');
       root.innerHTML = `
         <div class="${CSS_PREFIX}-detail">
           <div class="${CSS_PREFIX}-detail-header">
-            <button class="${CSS_PREFIX}-detail-back">${BACK_ICON}Back</button>
+            <button class="${CSS_PREFIX}-detail-back">${BACK_ICON}${errBack}</button>
           </div>
           <div class="${CSS_PREFIX}-error">
             <p>We couldn't load integrations right now.</p>
