@@ -201,7 +201,7 @@ Here is a complete HTML page with the widget embedded, styled like the [demo pag
     detailCardSize: 'm',                      // optional: 'l' | 'm' | 's'
     detailLayout: 'columns',                  // optional: 'stacked' | 'columns'
     partnerIds: [5, 10, 15],                 // optional: allowlist
-    language: 'ru',                           // optional: de, en, es, fr, pt, ru, tr
+    language: 'en',                           // optional: de, en, es, fr, pt, ru, tr
     align: 'left',                            // optional: 'center' | 'left' | 'right'
     cardRadius: '12px',                       // optional: partner card radius
     detailCardRadius: '8px'                   // optional: trigger/action card radius
@@ -357,7 +357,7 @@ You can combine `partnerIds` with `regions` — the widget will show partners th
 Choose the display language for partner titles (gallery cards, detail header) and trigger/action names. Supported locales: `'de'`, `'en'`, `'es'`, `'fr'`, `'pt'`, `'ru'`, `'tr'`. If a translation is missing for a partner or trigger/action, the widget falls back to English.
 
 ```javascript
-language: 'ru'
+language: 'en'
 ```
 
 ---
