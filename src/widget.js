@@ -225,8 +225,10 @@ export function initWidget(opts = {}) {
   }
   container.classList.add('albato-widget');
 
+  // Preserve language from previous init when re-init omits it (e.g. configurator partial update)
   const supportedLanguages = ['de', 'en', 'es', 'fr', 'pt', 'ru', 'tr'];
-  const language = supportedLanguages.includes(opts.language) ? opts.language : 'en';
+  const languageParam = opts.language ?? container._awOptions?.language;
+  const language = supportedLanguages.includes(languageParam) ? languageParam : 'en';
   const LOCALE_KEYS_RU = ['galleryTitle', 'searchPlaceholder', 'detailTitleTemplate', 'detailSubtitleTemplate', 'showMore', 'back', 'triggersTab', 'actionsTab', 'triggersAndActionsTab', 'triggerLabel', 'actionLabel'];
   const userTexts = opts.texts && typeof opts.texts === 'object' ? opts.texts : {};
   const baseTexts = language === 'ru' ? DEFAULT_TEXTS_RU : DEFAULT_TEXTS;
