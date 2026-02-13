@@ -3,7 +3,7 @@
  * @see Albato_apps_widget_prd.md
  */
 
-import { fetchPartners, fetchTriggers, fetchActions } from './api.js';
+import { fetchPartners, fetchTriggers, fetchActions, getPartnerTitle } from './api.js';
 import DOMPurify from 'dompurify';
 import styles from './styles.css?inline';
 
@@ -33,6 +33,16 @@ function sanitizeHtml(html) {
 
 function getDescription(obj) {
   return obj.description || obj.descriptionEn || '';
+}
+
+function getTriggerActionName(item, lang) {
+  if (!item) return '';
+  const n = item.names && typeof item.names === 'object' ? item.names : {};
+  const v = n[lang];
+  if (typeof v === 'string' && v.trim()) return v.trim();
+  const en = n.en;
+  if (typeof en === 'string' && en.trim()) return en.trim();
+  return item.name || item.nameEn || '';
 }
 
 const COLOR_KEYS = [
@@ -186,6 +196,7 @@ function applyOptionsToContainer(container, opts) {
  * @param {string} [options.detailPadding] - detail page padding. Default: "80px"
  * @param {string} [options.detailGap] - detail block gap. Default: "32px"
  * @param {string} [options.detailCardsGap] - gap between trigger/action cards. Default: "25px"
+ * @param {string} [options.language] - locale for partner titles and trigger/action names (de, en, es, fr, pt, ru, tr). Fallback: en. Default: "en"
  */
 export function initWidget(opts = {}) {
   const { container, regions, partnerIds } = opts;
@@ -206,10 +217,14 @@ export function initWidget(opts = {}) {
 
   const partnerIdsList = Array.isArray(partnerIds) ? partnerIds.filter((id) => typeof id === 'number' || (typeof id === 'string' && /^\d+$/.test(id))).map(Number) : undefined;
 
+  const supportedLanguages = ['de', 'en', 'es', 'fr', 'pt', 'ru', 'tr'];
+  const language = supportedLanguages.includes(opts.language) ? opts.language : 'en';
+
   const merged = {
     ...opts,
     regions: Array.isArray(regions) ? regions : undefined,
     partnerIds: partnerIdsList?.length ? partnerIdsList : undefined,
+    language,
     cardSize: size,
     detailCardSize: detailSize,
     detailLayout: layout,
@@ -312,7 +327,8 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [], 
     continuation = container._awPartnerContinuation;
   }
 
-  fetchPartners(page, search, regions, partnerIds, continuation)
+  const language = opts.language || 'en';
+  fetchPartners(page, search, regions, partnerIds, continuation, language)
     .then(({ data, meta, continuation: nextContinuation }) => {
       if (hasClientFilter && nextContinuation) {
         container._awPartnerContinuation = nextContinuation;
@@ -343,14 +359,17 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [], 
           `
             : `
             <div class="${CSS_PREFIX}-gallery">
-              ${mergedData.map((p) => `
+              ${mergedData.map((p) => {
+                const pt = getPartnerTitle(p, language);
+                return `
                 <div class="${CSS_PREFIX}-card" data-partner-id="${p.partnerId}">
                   <div class="${CSS_PREFIX}-card-inner">
                     ${showLogos ? `<img src="${(p.logo && p.logo['100x100']) || ''}" alt="" class="${CSS_PREFIX}-card-logo" onerror="this.style.display='none'" />` : ''}
-                    <span class="${CSS_PREFIX}-card-title" title="${escapeHtml(p.title || '')}">${escapeHtml(p.title || '')}</span>
+                    <span class="${CSS_PREFIX}-card-title" title="${escapeHtml(pt)}">${escapeHtml(pt)}</span>
                   </div>
                 </div>
-              `).join('')}
+              `;
+              }).join('')}
             </div>
             ${showMoreBtn ? `<button class="${CSS_PREFIX}-show-more">${escapeHtml(t.showMore || 'Show more')}</button>` : ''}
           `}
@@ -423,13 +442,16 @@ function renderDetailCards(items, logoUrl, typeLabel, opts = {}) {
   if (!items.length) return '';
   const showFooter = opts.showDetailCardFooter !== false;
   const showType = opts.showDetailCardType !== false;
+  const lang = opts.language || 'en';
   return `
     <div class="${CSS_PREFIX}-detail-gallery">
-      ${items.map((item) => `
+      ${items.map((item) => {
+        const itemName = getTriggerActionName(item, lang);
+        return `
         <div class="${CSS_PREFIX}-detail-card">
           <div class="${CSS_PREFIX}-detail-card-top">
             <img src="${logoUrl || ''}" alt="" class="${CSS_PREFIX}-detail-card-logo" onerror="this.style.display='none'" />
-            <div class="${CSS_PREFIX}-detail-card-name">${escapeHtml(item.name || '')}</div>
+            <div class="${CSS_PREFIX}-detail-card-name">${escapeHtml(itemName)}</div>
           </div>
           ${showFooter ? `
           <div class="${CSS_PREFIX}-detail-card-footer">
@@ -437,7 +459,8 @@ function renderDetailCards(items, logoUrl, typeLabel, opts = {}) {
           </div>
           ` : ''}
         </div>
-      `).join('')}
+      `;
+      }).join('')}
     </div>
   `;
 }
@@ -471,7 +494,7 @@ function mountServiceDetail(container, partner) {
 
   Promise.allSettled([fetchTriggers(partnerId, 1), fetchActions(partnerId, 1)])
     .then(([triggersResult, actionsResult]) => {
-      const title = partner?.title || 'Service';
+      const title = getPartnerTitle(partner, opts2.language || 'en') || 'Service';
       const logoUrl = partner?.logo?.['100x100'] || '';
 
       const triggersRes = triggersResult.status === 'fulfilled' ? triggersResult.value : null;

@@ -2,8 +2,32 @@
 
 This guide explains how to embed the Albato Apps Widget on your website. The widget displays a gallery of integrations and allows visitors to browse available services, triggers, and actions.
 
+## Simplest Embed
+
+Add an empty container on your landing page and initialize the widget after loading the script. Only `container` is required; pass options like `colors`, `cardSize`, or `font` to customize.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Page</title>
+  <style> body { margin: 0; padding: 24px; font-family: system-ui, sans-serif; } </style>
+</head>
+<body>
+  <div id="albato-widget"></div>
+  <script src="https://yourinho.github.io/integrations_widget/albato-widget.iife.js"></script>
+  <script>
+    AlbatoWidget.initWidget({ container: document.getElementById('albato-widget') });
+  </script>
+</body>
+</html>
+```
+
 ## Table of Contents
 
+- [Simplest Embed](#simplest-embed)
 - [Quick Start](#quick-start)
 - [Full Example Page](#full-example-page)
 - [Configuration Options](#configuration-options)
@@ -16,6 +40,7 @@ This guide explains how to embed the Albato Apps Widget on your website. The wid
   - [detailCardSize](#detailcardsize-optional)
   - [detailLayout](#detaillayout-optional)
   - [partnerIds](#partnerids-optional)
+  - [language](#language-optional)
   - [align](#align-optional)
   - [cardRadius](#cardradius-optional)
   - [detailCardRadius](#detailcardradius-optional)
@@ -157,6 +182,7 @@ Here is a complete HTML page with the widget embedded, styled like the [demo pag
 | `detailCardSize`| No      | Trigger/action card size: `'l'` (330×136px, default), `'m'` (270×112px), `'s'` (210×88px). |
 | `detailLayout`  | No      | Detail view layout: `'stacked'` (default), `'columns'` (triggers and actions in two columns, no tabs). |
 | `partnerIds`    | No      | Allowlist of partner IDs to show (e.g. `[5, 10, 15]`). For paid clients with a limited set. |
+| `language`      | No      | Locale for partner titles and trigger/action names: `'de'`, `'en'`, `'es'`, `'fr'`, `'pt'`, `'ru'`, `'tr'`. Fallback to English if missing. Default: `'en'`. |
 | `align`         | No      | Content alignment: `'center'` (default), `'left'`, `'right'`. |
 | `cardRadius`    | No      | Border radius for partner cards (e.g. `"16px"`, `"8px"`, `"0"`). Default: `"16px"`. |
 | `detailCardRadius` | No    | Border radius for trigger/action cards (e.g. `"16px"`, `"8px"`, `"0"`). Default: `"16px"`. |
@@ -175,6 +201,7 @@ Here is a complete HTML page with the widget embedded, styled like the [demo pag
     detailCardSize: 'm',                      // optional: 'l' | 'm' | 's'
     detailLayout: 'columns',                  // optional: 'stacked' | 'columns'
     partnerIds: [5, 10, 15],                 // optional: allowlist
+    language: 'ru',                           // optional: de, en, es, fr, pt, ru, tr
     align: 'left',                            // optional: 'center' | 'left' | 'right'
     cardRadius: '12px',                       // optional: partner card radius
     detailCardRadius: '8px'                   // optional: trigger/action card radius
@@ -324,6 +351,14 @@ partnerIds: [5, 10, 15, 20]
 ```
 
 You can combine `partnerIds` with `regions` — the widget will show partners that match both filters. Pass numeric IDs; string IDs like `"10"` are also accepted.
+
+### `language` (optional)
+
+Choose the display language for partner titles (gallery cards, detail header) and trigger/action names. Supported locales: `'de'`, `'en'`, `'es'`, `'fr'`, `'pt'`, `'ru'`, `'tr'`. If a translation is missing for a partner or trigger/action, the widget falls back to English.
+
+```javascript
+language: 'ru'
+```
 
 ---
 

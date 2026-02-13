@@ -3,6 +3,18 @@
  */
 
 const API_BASE = 'https://api.albato.com';
+
+const SUPPORTED_LANGUAGES = ['de', 'en', 'es', 'fr', 'pt', 'ru', 'tr'];
+
+export function getPartnerTitle(p, lang = 'en') {
+  if (!p) return '';
+  const t = p.titles && typeof p.titles === 'object' ? p.titles : {};
+  const v = t[lang];
+  if (typeof v === 'string' && v.trim()) return v.trim();
+  const en = t.en;
+  if (typeof en === 'string' && en.trim()) return en.trim();
+  return p.title || p.titleEn || '';
+}
 const PER_PAGE_SERVICES = 12;
 const PER_PAGE_TRIGGERS_ACTIONS = 10;
 const EXCLUDED_PARTNER_ID = 1;
@@ -79,7 +91,7 @@ async function fetchOnePartnerById(partnerId) {
 /**
  * Fetch multiple partners by IDs in parallel (one request per partner)
  */
-export async function fetchPartnersByIds(partnerIds, search = '') {
+export async function fetchPartnersByIds(partnerIds, search = '', language = 'en') {
   if (!Array.isArray(partnerIds) || partnerIds.length === 0) {
     return { data: [], meta: { page: 1, totalPages: 0, totalItemsCount: 0 } };
   }
@@ -87,7 +99,8 @@ export async function fetchPartnersByIds(partnerIds, search = '') {
   let data = results.filter(Boolean);
   if (search) {
     const q = search.toLowerCase();
-    data = data.filter((p) => (p.title || '').toLowerCase().includes(q));
+    const lang = SUPPORTED_LANGUAGES.includes(language) ? language : 'en';
+    data = data.filter((p) => getPartnerTitle(p, lang).toLowerCase().includes(q));
   }
   return {
     data,
@@ -101,9 +114,10 @@ export async function fetchPartnersByIds(partnerIds, search = '') {
  * @param {number[]|null} [regions]
  * @param {number[]|null} [partnerIds] - allowlist of partner IDs to show (for paid clients)
  * @param {{ leftover?: Array, nextApiPage?: number, cache?: { all: Array } }|null} [continuation] - for pagination; cache for partnerIds
+ * @param {string} [language] - locale for partner titles in client-side search (de, en, es, fr, pt, ru, tr). Default: 'en'
  * @returns {Promise<{data: Array, meta: {page, totalPages, totalItemsCount}, continuation?: Object}>}
  */
-export async function fetchPartners(page = 1, search = '', regions = null, partnerIds = null, continuation = null) {
+export async function fetchPartners(page = 1, search = '', regions = null, partnerIds = null, continuation = null, language = 'en') {
   const hasPartnerIdsFilter = Array.isArray(partnerIds) && partnerIds.length > 0;
   const hasRegionsFilter = Array.isArray(regions) && regions.length > 0;
   const hasClientFilter = hasRegionsFilter || hasPartnerIdsFilter;
@@ -121,13 +135,14 @@ export async function fetchPartners(page = 1, search = '', regions = null, partn
   if (hasPartnerIdsFilter) {
     const cache = continuation?.cache || { all: null };
     if (!cache.all) {
-      const { data } = await fetchPartnersByIds(partnerIds, '');
+      const { data } = await fetchPartnersByIds(partnerIds, '', language);
       cache.all = filterByRegion(data, regions);
     }
     let filtered = cache.all;
     if (search) {
       const q = search.toLowerCase();
-      filtered = filtered.filter((p) => (p.title || '').toLowerCase().includes(q));
+      const lang = SUPPORTED_LANGUAGES.includes(language) ? language : 'en';
+      filtered = filtered.filter((p) => getPartnerTitle(p, lang).toLowerCase().includes(q));
     }
     const totalItems = filtered.length;
     const totalPages = Math.max(1, Math.ceil(totalItems / PER_PAGE_SERVICES));

@@ -52,6 +52,7 @@ Output: `dist/albato-widget.iife.js`
 - `detailCardSize` (optional) — trigger/action card size: `'l'` (330×136px, default), `'m'` (270×112px), `'s'` (210×88px).
 - `detailLayout` (optional) — detail view layout: `'stacked'` (blocks under each other, default), `'columns'` (triggers and actions in two columns, no tabs).
 - `partnerIds` (optional) — allowlist of partner IDs to show (e.g. `[5, 10, 15]`). For paid clients with a limited set of integrations.
+- `language` (optional) — locale for partner titles and trigger/action names: `'de'`, `'en'`, `'es'`, `'fr'`, `'pt'`, `'ru'`, `'tr'`. Fallback to `en` if translation missing. Default: `'en'`.
 - `align` (optional) — content alignment: `'center'` (default), `'left'`, `'right'`.
 - `cardRadius` (optional) — border radius for partner cards (e.g. `"16px"`, `"8px"`, `"0"`). Default: `"16px"`.
 - `detailCardRadius` (optional) — border radius for trigger/action cards (e.g. `"16px"`, `"8px"`, `"0"`). Default: `"16px"`.

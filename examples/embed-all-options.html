@@ -81,9 +81,10 @@
     AlbatoWidget.initWidget({
       container: document.getElementById('albato-widget'),
 
-      // === Data filters ===
+      // === App filters ===
       // regions: [2, 3],           // e.g. only BR (2) and Global (3)
       // partnerIds: [5, 10, 15],  // e.g. allowlist for paid clients
+      language: 'en',              // 'de' | 'en' | 'es' | 'fr' | 'pt' | 'ru' | 'tr' — partner titles & trigger/action names. Fallback: en
 
       // === Layout & alignment ===
       align: 'center',            // 'center' | 'left' | 'right'
@@ -123,7 +124,7 @@
       },
 
       // === Visibility ===
-      showGalleryTitle: true,     // false to hide when page has its own title
+      showGalleryTitle: false,     // false to hide when page has its own title
       showSearch: true,
       showShowMore: true,
       showDetailTitle: true,
