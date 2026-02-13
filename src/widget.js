@@ -366,7 +366,9 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [], 
       const hasNext = totalPages > 0 && page < totalPages;
       const searchHadFocus = document.activeElement === root.querySelector(`.${CSS_PREFIX}-search-input`);
 
-      const t = opts.texts || DEFAULT_TEXTS;
+      const currentOpts = container._awOptions || opts;
+      const t = currentOpts.texts || DEFAULT_TEXTS;
+      const currentLang = currentOpts.language || 'en';
       const showTitle = opts.showGalleryTitle !== false;
       const showSearchEl = opts.showSearch !== false;
       const showMoreBtn = opts.showShowMore !== false && hasNext;
@@ -376,7 +378,7 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [], 
       root.innerHTML = `
         <div class="${CSS_PREFIX}-gallery-wrap">
           ${showTitle ? `<h2 class="${CSS_PREFIX}-gallery-title">${escapeHtml(t.galleryTitle || 'Available integrations')}</h2>` : ''}
-          ${showSearchEl ? renderSearchBar(search, isEmpty && !isSearchEmpty, opts) : ''}
+          ${showSearchEl ? renderSearchBar(search, isEmpty && !isSearchEmpty, currentOpts) : ''}
           ${isEmpty
             ? `
             <div class="${CSS_PREFIX}-empty">
@@ -386,7 +388,7 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [], 
             : `
             <div class="${CSS_PREFIX}-gallery">
               ${mergedData.map((p) => {
-                const pt = getPartnerTitle(p, language);
+                const pt = getPartnerTitle(p, currentLang);
                 return `
                 <div class="${CSS_PREFIX}-card" data-partner-id="${p.partnerId}">
                   <div class="${CSS_PREFIX}-card-inner">
@@ -436,8 +438,8 @@ function mountGallery(container, { page = 1, search = '', accumulatedData = [], 
     })
     .catch(() => {
       const searchHadFocus = document.activeElement === root.querySelector(`.${CSS_PREFIX}-search-input`);
-
-      const t = opts.texts || DEFAULT_TEXTS;
+      const errOpts = container._awOptions || opts;
+      const t = errOpts.texts || DEFAULT_TEXTS;
       const showTitle = opts.showGalleryTitle !== false;
       const showSearchEl = opts.showSearch !== false;
       root.innerHTML = `
