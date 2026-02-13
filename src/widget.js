@@ -227,8 +227,15 @@ export function initWidget(opts = {}) {
 
   const supportedLanguages = ['de', 'en', 'es', 'fr', 'pt', 'ru', 'tr'];
   const language = supportedLanguages.includes(opts.language) ? opts.language : 'en';
+  const LOCALE_KEYS_RU = ['galleryTitle', 'searchPlaceholder', 'detailTitleTemplate', 'detailSubtitleTemplate', 'showMore', 'back', 'triggersTab', 'actionsTab', 'triggersAndActionsTab', 'triggerLabel', 'actionLabel'];
+  const userTexts = opts.texts && typeof opts.texts === 'object' ? opts.texts : {};
   const baseTexts = language === 'ru' ? DEFAULT_TEXTS_RU : DEFAULT_TEXTS;
-  const texts = { ...baseTexts, ...(opts.texts && typeof opts.texts === 'object' ? opts.texts : {}) };
+  let texts = { ...baseTexts };
+  for (const k of Object.keys(userTexts)) {
+    if (language !== 'ru' || !LOCALE_KEYS_RU.includes(k)) {
+      texts[k] = userTexts[k];
+    }
+  }
   const typography = { ...DEFAULT_TYPOGRAPHY, ...(opts.typography && typeof opts.typography === 'object' ? opts.typography : {}) };
   const visibility = { ...DEFAULT_VISIBILITY, ...Object.fromEntries(Object.keys(DEFAULT_VISIBILITY).map((k) => [k, getOpt(opts, k, DEFAULT_VISIBILITY[k])])) };
 
