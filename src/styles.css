@@ -51,6 +51,7 @@
   max-width: 100%;
   overflow-x: hidden;
   box-sizing: border-box;
+  background: var(--aw-color-background);
 }
 
 .aw-root {
@@ -551,7 +552,7 @@
   gap: var(--aw-detail-gap);
   max-width: var(--aw-max-width);
   width: 100%;
-  min-height: 1648px;
+  min-height: auto;
   background: var(--aw-color-detail-background, var(--aw-color-background));
   box-sizing: border-box;
 }
