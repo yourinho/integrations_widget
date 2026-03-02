@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:global": "vite build --mode global",
+    "build:all": "npm run build && npm run build:global",
     "preview": "vite preview"
   },
   "devDependencies": {

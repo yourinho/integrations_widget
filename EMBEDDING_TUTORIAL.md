@@ -44,6 +44,10 @@ Add an empty container on your landing page and initialize the widget after load
   - [align](#align-optional)
   - [cardRadius](#cardradius-optional)
   - [detailCardRadius](#detailcardradius-optional)
+  - [typography](#typography-optional)
+  - [texts](#texts-optional)
+  - [layout](#layout-optional)
+  - [visibility](#visibility-optional)
 - [Live Examples](#live-examples)
 - [Styling Tips](#styling-tips)
 - [Resilient embed](#resilient-embed-handling-script-load-failure)
@@ -175,17 +179,21 @@ Here is a complete HTML page with the widget embedded, styled like the [demo pag
 | Option     | Required | Description |
 |-----------|----------|-------------|
 | `container` | **Yes** | The DOM element where the widget will be mounted. Usually a `<div>`. |
-| `regions`   | No      | Array of region IDs to filter integrations. `2` = BR (Brazil), `3` = global. Omit to show all. |
+| `regions`   | No      | Array of region IDs to filter integrations. `2` = BR (Brazil), `3` = Global. Omit to show all. |
 | `font`      | No      | Custom font-family for the widget (e.g. `"Inter, sans-serif"`). Load the font on your page first. |
-| `colors`    | No      | Object with color overrides for branding: `primary`, `background`, `surface`, `text`, `textMuted`, `border`, `textOnPrimary`. |
+| `colors`    | No      | Object with color overrides. See [colors](#colors-optional) for all keys. |
 | `cardSize`      | No      | Partner card size: `'l'` (180px, default), `'m'` (150px), `'s'` (120px). |
 | `detailCardSize`| No      | Trigger/action card size: `'l'` (330×136px, default), `'m'` (270×112px), `'s'` (210×88px). |
 | `detailLayout`  | No      | Detail view layout: `'stacked'` (default), `'columns'` (triggers and actions in two columns, no tabs). |
 | `partnerIds`    | No      | Allowlist of partner IDs to show (e.g. `[5, 10, 15]`). For paid clients with a limited set. |
-| `language`      | No      | Locale for partner titles and trigger/action names: `'de'`, `'en'`, `'es'`, `'fr'`, `'pt'`, `'ru'`, `'tr'`. Fallback to English if missing. Default: `'en'`. |
+| `language`      | No      | Locale for partner titles and trigger/action names: `'de'`, `'en'`, `'es'`, `'fr'`, `'pt'`, `'tr'`. Fallback to English if missing. Default: `'en'`. |
 | `align`         | No      | Content alignment: `'center'` (default), `'left'`, `'right'`. |
 | `cardRadius`    | No      | Border radius for partner cards (e.g. `"16px"`, `"8px"`, `"0"`). Default: `"16px"`. |
 | `detailCardRadius` | No    | Border radius for trigger/action cards (e.g. `"16px"`, `"8px"`, `"0"`). Default: `"16px"`. |
+| `typography`    | No      | Object with font sizes and weights. See [typography](#typography-optional). |
+| `texts`         | No      | Object to override UI strings (gallery title, search placeholder, tabs, etc.). See [texts](#texts-optional). |
+| `maxWidth`, `galleryPadding`, `galleryGap`, `galleryCardsGap`, `detailPadding`, `detailGap`, `detailCardsGap` | No | Layout spacing. See [layout](#layout-optional). |
+| `showGalleryTitle`, `showSearch`, `showShowMore`, `showDetailTitle`, `showDetailSubtitle`, `showDetailTabs`, `showSectionTitles`, `showCardLogos`, `showDetailCardType`, `showDetailCardFooter` | No | Visibility toggles. Default: `true`. |
 
 ### Example with All Options
 
@@ -201,7 +209,7 @@ Here is a complete HTML page with the widget embedded, styled like the [demo pag
     detailCardSize: 'm',                      // optional: 'l' | 'm' | 's'
     detailLayout: 'columns',                  // optional: 'stacked' | 'columns'
     partnerIds: [5, 10, 15],                 // optional: allowlist
-    language: 'en',                           // optional: de, en, es, fr, pt, ru, tr
+    language: 'en',                           // optional: de, en, es, fr, pt, tr
     align: 'left',                            // optional: 'center' | 'left' | 'right'
     cardRadius: '12px',                       // optional: partner card radius
     detailCardRadius: '8px'                   // optional: trigger/action card radius
@@ -270,14 +278,33 @@ To match the widget’s colors to your brand, pass an object with one or more of
 | Key | Role | Default |
 |-----|------|---------|
 | `primary` | Active tab, hover states, accents | `#2C3534` |
-| `background` | Panels, inputs; fallback for card backgrounds | `#FFFFFF` |
+| `background` | Panels, inputs; fallback for card backgrounds | `#f5f5f5` |
 | `surface` | Card footers, hover areas | `#F4F5F6` |
 | `text` | Main text | `#2C3534` |
 | `textMuted` | Secondary text, placeholders | `#A0A4B1` |
 | `border` | Borders, dividers | `#E6E8EC` |
 | `textOnPrimary` | Text on primary background | `#FFFFFF` |
-| `cardBackground` | Partner card background in gallery | Same as `background` |
-| `detailCardBackground` | Trigger/action card background on detail page | Same as `background` |
+| `cardBackground` | Partner card background in gallery | `#FFFFFF` |
+| `detailCardBackground` | Trigger/action card background on detail page | `#FFFFFF` |
+| `galleryBackground` | Gallery area background | — |
+| `detailBackground` | Detail page background | — |
+| `searchBackground` | Search input background | — |
+| `searchBorderColor` | Search field border | — |
+| `searchFocusBorderColor` | Search field border when focused | — |
+| `cardBorderColor` | Partner card border | — |
+| `cardHoverBorderColor` | Partner card border on hover | — |
+| `cardHoverShadow` | Partner card shadow on hover (CSS box-shadow) | — |
+| `tabBackground` | Inactive tab background | — |
+| `tabActiveBackground` | Active tab background | — |
+| `tabBorderColor` | Tab border | — |
+| `detailCardFooterBackground` | Trigger/action card footer background | — |
+| `detailCardFooterLabelColor` | Trigger/Action label color | — |
+| `emptyTextColor` | Empty state text | — |
+| `errorTextColor` | Error message text | — |
+| `skeletonColor` | Loading skeleton color | — |
+| `backButtonHoverBackground` | Back button hover background | — |
+| `showMoreBackground` | Show more button background | — |
+| `showMoreBorderColor` | Show more button border | — |
 
 You can override only the colors you need:
 
@@ -354,7 +381,7 @@ You can combine `partnerIds` with `regions` — the widget will show partners th
 
 ### `language` (optional)
 
-Choose the display language for partner titles (gallery cards, detail header) and trigger/action names. Supported locales: `'de'`, `'en'`, `'es'`, `'fr'`, `'pt'`, `'ru'`, `'tr'`. If a translation is missing for a partner or trigger/action, the widget falls back to English.
+Choose the display language for partner titles (gallery cards, detail header) and trigger/action names. Supported locales: `'de'`, `'en'`, `'es'`, `'fr'`, `'pt'`, `'tr'`. If a translation is missing for a partner or trigger/action, the widget falls back to English.
 
 ```javascript
 language: 'en'
@@ -402,10 +429,112 @@ Default: `"16px"`.
 
 ---
 
+### `typography` (optional)
+
+Override font sizes and weights for widget elements:
+
+| Key | Element | Default |
+|-----|---------|---------|
+| `galleryTitleSize` | Gallery heading | `"56px"` |
+| `galleryTitleWeight` | Gallery heading | `700` |
+| `searchSize` | Search input | `"15px"` |
+| `cardTitleSize` | Partner card title | `"14px"` |
+| `cardTitleWeight` | Partner card title | `400` |
+| `detailTitleSize` | Service detail heading | `"32px"` |
+| `detailTitleWeight` | Service detail heading | `700` |
+| `detailSubtitleSize` | Service description | `"17px"` |
+| `tabSize` | Tab labels | `"15px"` |
+| `sectionTitleSize` | Triggers/Actions section headings | `"20px"` |
+| `detailCardNameSize` | Trigger/action card name | `"17px"` |
+| `detailCardTypeSize` | Trigger/Action label in card footer | `"17px"` |
+| `detailCardTypeWeight` | Trigger/Action label | `600` |
+| `showMoreSize` | Show more button | `"17px"` |
+| `backSize` | Back button | `"17px"` |
+
+```javascript
+typography: { galleryTitleSize: '48px', cardTitleWeight: 600 }
+```
+
+---
+
+### `texts` (optional)
+
+Override UI strings for localization or custom copy:
+
+| Key | Default |
+|-----|---------|
+| `galleryTitle` | `"Available integrations"` |
+| `searchPlaceholder` | `"Search integrations"` |
+| `detailTitleTemplate` | `"Triggers and actions for {name} integrations"` (`{name}` = partner name) |
+| `detailSubtitleTemplate` | Service description template |
+| `showMore` | `"Show more"` |
+| `back` | `"Back"` |
+| `triggersTab` | `"Triggers"` |
+| `actionsTab` | `"Actions"` |
+| `triggersAndActionsTab` | `"Triggers & Actions"` |
+| `triggerLabel` | `"Trigger"` |
+| `actionLabel` | `"Action"` |
+| `emptyGallery` | `"No integrations available"` |
+| `emptySearch` | `"No services found"` |
+| `emptyTriggers` | `"This service has no available triggers"` |
+| `emptyActions` | `"This service has no available actions"` |
+| `errorGeneral` | `"We couldn't load integrations right now."` |
+| `errorServices` | `"Failed to load services"` |
+| `retry` | `"Try again"` |
+
+```javascript
+texts: { galleryTitle: 'Our integrations', searchPlaceholder: 'Search...' }
+```
+
+---
+
+### `layout` (optional)
+
+Control spacing and max width:
+
+| Key | Default | Description |
+|-----|---------|-------------|
+| `maxWidth` | `"1040px"` | Max content width |
+| `galleryPadding` | `"80px"` | Gallery area padding |
+| `galleryGap` | `"32px"` | Gap between heading, search, and cards |
+| `galleryCardsGap` | `"32px"` | Gap between partner cards |
+| `detailPadding` | `"80px"` | Detail page padding |
+| `detailGap` | `"32px"` | Gap between detail sections |
+| `detailCardsGap` | `"25px"` | Gap between trigger/action cards |
+
+```javascript
+maxWidth: '1200px', galleryPadding: '40px'
+```
+
+---
+
+### `visibility` (optional)
+
+Show or hide widget elements. All default to `true`:
+
+| Key | Element |
+|-----|---------|
+| `showGalleryTitle` | Gallery heading |
+| `showSearch` | Search field |
+| `showShowMore` | Show more button |
+| `showDetailTitle` | Service name on detail page |
+| `showDetailSubtitle` | Service description |
+| `showDetailTabs` | Triggers/Actions tabs (stacked layout) |
+| `showSectionTitles` | "Triggers" / "Actions" section headings |
+| `showCardLogos` | Logos in partner cards |
+| `showDetailCardType` | Trigger/Action label in card footer |
+| `showDetailCardFooter` | Entire footer bar in trigger/action cards |
+
+```javascript
+showGalleryTitle: false, showSearch: true
+```
+
+---
+
 ## Live Examples
 
 - **Basic embed:** [https://yourinho.github.io/integrations_widget/](https://yourinho.github.io/integrations_widget/)
-- **Examples** in the `examples/` folder: `embed.html`, `embed-regions-filter.html`, `embed-dark-theme.html`, `embed-card-size.html`, `embed-card-radius.html`, `embed-card-background.html`, `embed-detail-columns.html`, `embed-partner-ids.html`, `embed-align-left.html`, `embed-language-ru.html`.
+- **Examples** in the `examples/` folder: `embed.html`, `embed-regions-filter.html`, `embed-dark-theme.html`, `embed-card-size.html`, `embed-card-radius.html`, `embed-card-background.html`, `embed-detail-columns.html`, `embed-partner-ids.html`, `embed-align-left.html`, `embed-all-options.html`.
 
 ---
 
@@ -473,10 +602,11 @@ Customize the fallback content in `onerror` to match your site (link, message, o
 
 ## Script URL
 
-Use this URL to load the widget script:
+Use one of these URLs to load the widget script:
 
-```
-https://yourinho.github.io/integrations_widget/albato-widget.iife.js
-```
+| Variant | URL | Use case |
+|---------|-----|----------|
+| **Standard** | `https://yourinho.github.io/integrations_widget/albato-widget.iife.js` | All regions, full locale set |
+| **Global** | `https://yourinho.github.io/integrations_widget/albato-widget-global.iife.js` | Regions 2 and 3 by default, locales: de, en, es, fr, pt, tr |
 
-Do not modify or host this file yourself unless you have a custom deployment setup.
+Do not modify or host these files yourself unless you have a custom deployment setup.

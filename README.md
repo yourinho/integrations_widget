@@ -23,10 +23,14 @@ Open http://localhost:5173
 ## Build
 
 ```bash
-npm run build
+npm run build           # standard widget
+npm run build:global    # global variant (regions 2,3 by default; no ru locale)
+npm run build:all       # both variants
 ```
 
-Output: `dist/albato-widget.iife.js`
+Output:
+- `dist/albato-widget.iife.js` — standard
+- `dist/albato-widget-global.iife.js` — global variant
 
 ## Embedding
 
@@ -45,19 +49,21 @@ Output: `dist/albato-widget.iife.js`
 
 **Options:**
 - `container` (required) — DOM element to mount the widget
-- `regions` (optional) — array of region IDs to filter partners (e.g. `[2, 3]`). Omit to show all.
-- `font` (optional) — font-family string (e.g. `"Inter, sans-serif"` or `"'Open Sans', sans-serif"`). Load the font on your page first (e.g. via Google Fonts).
-- `colors` (optional) — object with color overrides: `primary`, `background`, `surface`, `text`, `textMuted`, `border`, `textOnPrimary`, `cardBackground`, `detailCardBackground`. Pass only the keys you want to override.
-- `cardSize` (optional) — partner card size: `'l'` (180px, default), `'m'` (150px), `'s'` (120px).
-- `detailCardSize` (optional) — trigger/action card size: `'l'` (330×136px, default), `'m'` (270×112px), `'s'` (210×88px).
-- `detailLayout` (optional) — detail view layout: `'stacked'` (blocks under each other, default), `'columns'` (triggers and actions in two columns, no tabs).
-- `partnerIds` (optional) — allowlist of partner IDs to show (e.g. `[5, 10, 15]`). For paid clients with a limited set of integrations.
-- `language` (optional) — locale for partner titles and trigger/action names: `'de'`, `'en'`, `'es'`, `'fr'`, `'pt'`, `'ru'`, `'tr'`. Fallback to `en` if translation missing. Default: `'en'`.
-- `align` (optional) — content alignment: `'center'` (default), `'left'`, `'right'`.
-- `cardRadius` (optional) — border radius for partner cards (e.g. `"16px"`, `"8px"`, `"0"`). Default: `"16px"`.
-- `detailCardRadius` (optional) — border radius for trigger/action cards (e.g. `"16px"`, `"8px"`, `"0"`). Default: `"16px"`.
+- `regions` (optional) — array of region IDs to filter partners (e.g. `[2, 3]` for BR and Global). Omit to show all.
+- `partnerIds` (optional) — allowlist of partner IDs (e.g. `[5, 10, 15]`)
+- `language` (optional) — locale: `'de'`, `'en'`, `'es'`, `'fr'`, `'pt'`, `'tr'`. Default: `'en'`
+- `font` (optional) — font-family (e.g. `"'Open Sans', sans-serif"`)
+- `colors` (optional) — color overrides: `primary`, `background`, `surface`, `text`, `textMuted`, `border`, `textOnPrimary`, `cardBackground`, `detailCardBackground`, plus extended keys (see [EMBEDDING_TUTORIAL.md](EMBEDDING_TUTORIAL.md))
+- `cardSize`, `detailCardSize` (optional) — `'l'` | `'m'` | `'s'`
+- `detailLayout` (optional) — `'stacked'` | `'columns'`
+- `align` (optional) — `'center'` | `'left'` | `'right'`
+- `cardRadius`, `detailCardRadius` (optional) — CSS value (e.g. `"16px"`)
+- `typography` (optional) — font sizes and weights per element
+- `texts` (optional) — UI string overrides
+- `showGalleryTitle`, `showSearch`, `showShowMore`, etc. (optional) — visibility toggles
+- `maxWidth`, `galleryPadding`, `galleryGap`, etc. (optional) — layout spacing
 
-See `examples/embed.html` for a full example.
+See [EMBEDDING_TUTORIAL.md](EMBEDDING_TUTORIAL.md) for full reference and `examples/embed-all-options.html` for all options.
 
 ## Размещение на GitHub
 

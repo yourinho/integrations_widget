@@ -4,7 +4,10 @@
 
 const API_BASE = 'https://api.albato.com';
 
-const SUPPORTED_LANGUAGES = ['de', 'en', 'es', 'fr', 'pt', 'ru', 'tr'];
+const SUPPORTED_LANGUAGES =
+  typeof __BUILD_GLOBAL__ !== 'undefined' && __BUILD_GLOBAL__
+    ? ['de', 'en', 'es', 'fr', 'pt', 'tr']
+    : ['de', 'en', 'es', 'fr', 'pt', 'ru', 'tr'];
 
 export function getPartnerTitle(p, lang = 'en') {
   if (!p) return '';

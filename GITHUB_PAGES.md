@@ -14,10 +14,12 @@
 
 ```bash
 npm run build
+npm run build:global   # опционально: вариант «global» (без региона 1, без ru-локали)
 ```
 
 Будут созданы:
-- `dist/albato-widget.iife.js` — виджет
+- `dist/albato-widget.iife.js` — виджет (все регионы, все локали)
+- `dist/albato-widget-global.iife.js` — виджет global (регионы 2 и 3 по умолчанию, без ru)
 - `dist/index.html` — демо-страница (нужна для работы GitHub Pages)
 
 ### Шаг 2. Залейте содержимое dist на ветку gh-pages
@@ -55,11 +57,10 @@ cd ..
 
 После выполнения шагов 1–3 GitHub автоматически задеплоит содержимое ветки `gh-pages`. Обычно это занимает 1–2 минуты.
 
-Виджет будет доступен по адресу:
+Виджет будет доступен по адресам:
 
-```
-https://yourinho.github.io/integrations_widget/albato-widget.iife.js
-```
+- `https://yourinho.github.io/integrations_widget/albato-widget.iife.js` — стандартный виджет
+- `https://yourinho.github.io/integrations_widget/albato-widget-global.iife.js` — вариант global (регионы 2, 3 по умолчанию)
 
 **Повторный деплой при обновлении виджета:**
 

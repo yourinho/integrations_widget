@@ -80,20 +80,24 @@ const DEFAULT_TEXTS = {
   retry: 'Try again',
 };
 
-const DEFAULT_TEXTS_RU = {
-  ...DEFAULT_TEXTS,
-  galleryTitle: 'Доступные сервисы',
-  searchPlaceholder: 'Поиск по названию...',
-  detailTitleTemplate: 'Триггеры и экшены для {name}',
-  detailSubtitleTemplate: 'Триггеры фиксируют изменения в {name}, а действия автоматически реагируют — передавая данные и выполняя нужные обновления',
-  showMore: 'Показать еще',
-  back: 'Назад',
-  triggersTab: 'Триггеры',
-  actionsTab: 'Действия',
-  triggersAndActionsTab: 'Всё',
-  triggerLabel: 'Триггер',
-  actionLabel: 'Действие',
-};
+const DEFAULT_TEXTS_RU =
+  typeof __BUILD_GLOBAL__ !== 'undefined' && __BUILD_GLOBAL__
+    ? null
+    : {
+        ...DEFAULT_TEXTS,
+        galleryTitle: 'Доступные сервисы',
+        searchPlaceholder: 'Поиск по названию...',
+        detailTitleTemplate: 'Триггеры и экшены для {name}',
+        detailSubtitleTemplate:
+          'Триггеры фиксируют изменения в {name}, а действия автоматически реагируют — передавая данные и выполняя нужные обновления',
+        showMore: 'Показать еще',
+        back: 'Назад',
+        triggersTab: 'Триггеры',
+        actionsTab: 'Действия',
+        triggersAndActionsTab: 'Всё',
+        triggerLabel: 'Триггер',
+        actionLabel: 'Действие',
+      };
 
 const DEFAULT_TYPOGRAPHY = {
   galleryTitleSize: '56px',
@@ -218,26 +222,46 @@ function applyOptionsToContainer(container, opts) {
  * @param {string} [options.language] - locale for partner titles and trigger/action names (de, en, es, fr, pt, ru, tr). Fallback: en. Default: "en"
  */
 export function initWidget(opts = {}) {
-  const { container, regions, partnerIds } = opts;
+  const { container, regions: regionsOpt, partnerIds } = opts;
   if (!container) {
     console.error('Albato Widget: container is required');
     return;
   }
   container.classList.add('albato-widget');
 
-  // Preserve language from previous init when re-init omits it (e.g. configurator partial update)
-  const supportedLanguages = ['de', 'en', 'es', 'fr', 'pt', 'ru', 'tr'];
+  const supportedLanguages =
+    typeof __BUILD_GLOBAL__ !== 'undefined' && __BUILD_GLOBAL__
+      ? ['de', 'en', 'es', 'fr', 'pt', 'tr']
+      : ['de', 'en', 'es', 'fr', 'pt', 'ru', 'tr'];
   const languageParam = opts.language ?? container._awOptions?.language;
   const language = supportedLanguages.includes(languageParam) ? languageParam : 'en';
-  const LOCALE_KEYS_RU = ['galleryTitle', 'searchPlaceholder', 'detailTitleTemplate', 'detailSubtitleTemplate', 'showMore', 'back', 'triggersTab', 'actionsTab', 'triggersAndActionsTab', 'triggerLabel', 'actionLabel'];
+  const LOCALE_KEYS_RU =
+    typeof __BUILD_GLOBAL__ !== 'undefined' && __BUILD_GLOBAL__
+      ? []
+      : ['galleryTitle', 'searchPlaceholder', 'detailTitleTemplate', 'detailSubtitleTemplate', 'showMore', 'back', 'triggersTab', 'actionsTab', 'triggersAndActionsTab', 'triggerLabel', 'actionLabel'];
   const userTexts = opts.texts && typeof opts.texts === 'object' ? opts.texts : {};
-  const baseTexts = language === 'ru' ? DEFAULT_TEXTS_RU : DEFAULT_TEXTS;
+  const baseTexts =
+    !(typeof __BUILD_GLOBAL__ !== 'undefined' && __BUILD_GLOBAL__) && language === 'ru' && DEFAULT_TEXTS_RU
+      ? DEFAULT_TEXTS_RU
+      : DEFAULT_TEXTS;
   let texts = { ...baseTexts };
   for (const k of Object.keys(userTexts)) {
-    if (language !== 'ru' || !LOCALE_KEYS_RU.includes(k)) {
+    if (
+      (typeof __BUILD_GLOBAL__ !== 'undefined' && __BUILD_GLOBAL__) ||
+      language !== 'ru' ||
+      !LOCALE_KEYS_RU.includes(k)
+    ) {
       texts[k] = userTexts[k];
     }
   }
+  const defaultRegions =
+    typeof __BUILD_GLOBAL__ !== 'undefined' && __BUILD_GLOBAL__ ? [2, 3] : undefined;
+  const regions =
+    regionsOpt !== undefined
+      ? Array.isArray(regionsOpt)
+        ? regionsOpt
+        : undefined
+      : defaultRegions;
   const typography = { ...DEFAULT_TYPOGRAPHY, ...(opts.typography && typeof opts.typography === 'object' ? opts.typography : {}) };
   const visibility = { ...DEFAULT_VISIBILITY, ...Object.fromEntries(Object.keys(DEFAULT_VISIBILITY).map((k) => [k, getOpt(opts, k, DEFAULT_VISIBILITY[k])])) };
 
@@ -250,7 +274,7 @@ export function initWidget(opts = {}) {
 
   const merged = {
     ...opts,
-    regions: Array.isArray(regions) ? regions : undefined,
+    regions,
     partnerIds: partnerIdsList?.length ? partnerIdsList : undefined,
     language,
     cardSize: size,

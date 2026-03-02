@@ -1,20 +1,26 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig({
-  build: {
-    lib: {
-      entry: 'src/widget.js',
-      name: 'AlbatoWidget',
-      fileName: 'albato-widget',
-      formats: ['iife'],
+export default defineConfig(({ mode }) => {
+  const isGlobal = mode === 'global';
+  return {
+    define: {
+      __BUILD_GLOBAL__: isGlobal,
     },
-    rollupOptions: {
-      output: {
-        inlineDynamicImports: true,
-        extend: true,
+    build: {
+      lib: {
+        entry: 'src/widget.js',
+        name: 'AlbatoWidget',
+        fileName: isGlobal ? 'albato-widget-global' : 'albato-widget',
+        formats: ['iife'],
       },
+      rollupOptions: {
+        output: {
+          inlineDynamicImports: true,
+          extend: true,
+        },
+      },
+      outDir: 'dist',
+      emptyOutDir: !isGlobal,
     },
-    outDir: 'dist',
-    emptyOutDir: true,
-  },
+  };
 });
